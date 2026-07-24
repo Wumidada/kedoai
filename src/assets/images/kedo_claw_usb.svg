@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- 渐变定义 -->
+    <linearGradient id="usbGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4DA3FF"/>
+      <stop offset="50%" style="stop-color:#1E9CFF"/>
+      <stop offset="100%" style="stop-color:#0080FF"/>
+    </linearGradient>
+    
+    <linearGradient id="usbConnectorGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F0F0F0"/>
+      <stop offset="50%" style="stop-color:#E0E0E0"/>
+      <stop offset="100%" style="stop-color:#C0C0C0"/>
+    </linearGradient>
+
+    <!-- 发光效果 -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+
+    <!-- 阴影效果 -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="2" stdDeviation="4" flood-color="rgba(0,0,0,0.2)"/>
+    </filter>
+  </defs>
+
+  <!-- 背景 -->
+  <rect width="400" height="300" rx="16" fill="#F8FAFF"/>
+  
+  <!-- 背景装饰 -->
+  <circle cx="200" cy="150" r="100" fill="#E6F2FF" opacity="0.8">
+    <animate attributeName="r" values="95;105;95" dur="10s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- 装饰光效 -->
+  <circle cx="150" cy="100" r="40" fill="#B3D9FF" opacity="0.3">
+    <animate attributeName="r" values="35;45;35" dur="8s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.2;0.4;0.2" dur="8s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="250" cy="200" r="50" fill="#99CCFF" opacity="0.2">
+    <animate attributeName="r" values="45;55;45" dur="12s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.1;0.3;0.1" dur="12s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- 几何装饰元素 -->
+  <g transform="translate(120, 80)" opacity="0.7">
+    <circle cx="0" cy="0" r="12" fill="none" stroke="#4DA3FF" stroke-width="2" stroke-dasharray="4,2">
+      <animate attributeName="r" values="10;14;10" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="stroke-opacity" values="0.6;1;0.6" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="0" cy="0" r="4" fill="#4DA3FF">
+      <animate attributeName="r" values="3;5;3" dur="3s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <g transform="translate(280, 220)" opacity="0.7">
+    <rect x="-10" y="-10" width="20" height="20" rx="4" fill="none" stroke="#4DA3FF" stroke-width="2">
+      <animate attributeName="width" values="18;22;18" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="height" values="18;22;18" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="stroke-opacity" values="0.6;1;0.6" dur="4s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+  
+  <!-- 动态线条 -->
+  <path d="M80,150 C120,120 180,180 220,150 C260,120 320,180 360,150" stroke="#B3D9FF" stroke-width="2" fill="none" stroke-linecap="round">
+    <animate attributeName="stroke-opacity" values="0.4;0.8;0.4" dur="6s" repeatCount="indefinite"/>
+  </path>
+  
+  <!-- U盘主体 -->
+  <g transform="translate(200, 150) rotate(-10)">
+    <!-- U盘主体 -->
+    <rect x="-120" y="-30" width="140" height="60" rx="10" fill="url(#usbGradient)" filter="url(#shadow)">
+      <animateTransform attributeName="transform" type="scale" values="0.98;1.02;0.98" dur="5s" repeatCount="indefinite"/>
+    </rect>
+    
+    <!-- U盘表面高光 -->
+    <path d="M-110,-20 Q-50,-10 20,-20" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.3">
+      <animate attributeName="opacity" values="0.2;0.4;0.2" dur="4s" repeatCount="indefinite"/>
+    </path>
+    
+    <!-- U盘挂绳孔 -->
+    <rect x="-110" y="-15" width="20" height="30" rx="10" fill="white" opacity="0.9">
+      <animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite"/>
+    </rect>
+    
+    <!-- U盘指示灯 -->
+    <g transform="translate(-70, 0)">
+      <circle cx="0" cy="0" r="6" fill="#4CAF50" opacity="0.3">
+        <animate attributeName="r" values="5;7;5" dur="2s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="0" cy="0" r="3" fill="#4CAF50">
+        <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+    
+    <!-- USB连接器 -->
+    <g transform="translate(20, 0)">
+      <!-- 连接器主体 -->
+      <rect x="0" y="-25" width="40" height="50" fill="url(#usbConnectorGradient)" filter="url(#shadow)">
+        <animateTransform attributeName="transform" type="translate" values="0,0;2,0;0,0" dur="3s" repeatCount="indefinite"/>
+      </rect>
+      
+      <!-- 连接器金属部分 -->
+      <rect x="40" y="-22" width="3" height="44" fill="#A0A0A0"/>
+      
+      <!-- 连接器触点 -->
+      <rect x="10" y="-15" width="20" height="5" rx="2" fill="#333333">
+        <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="10" y="10" width="20" height="5" rx="2" fill="#333333">
+        <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" begin="0.5s" repeatCount="indefinite"/>
+      </rect>
+    </g>
+  </g>
+  
+  <!-- 数据流动效果 -->
+  <g transform="translate(200, 150) rotate(-10)">
+    <circle cx="-80" cy="0" r="4" fill="white" opacity="0.8">
+      <animate attributeName="cx" values="-80;0;0" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;0" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="-80" cy="10" r="4" fill="white" opacity="0.8">
+      <animate attributeName="cx" values="-80;0;0" dur="4s" begin="0.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;0" dur="4s" begin="0.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="-80" cy="-10" r="4" fill="white" opacity="0.8">
+      <animate attributeName="cx" values="-80;0;0" dur="4s" begin="1s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;0" dur="4s" begin="1s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- 底部装饰 -->
+  <g transform="translate(200, 200)">
+    <circle cx="0" cy="0" r="5" fill="#4DA3FF" opacity="0.6">
+      <animate attributeName="r" values="4;6;4" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="-40" cy="20" r="3" fill="#4DA3FF" opacity="0.4">
+      <animate attributeName="r" values="2;4;2" dur="2.5s" begin="0.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="40" cy="20" r="3" fill="#4DA3FF" opacity="0.4">
+      <animate attributeName="r" values="2;4;2" dur="2.5s" begin="1s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- 顶部装饰 -->
+  <g transform="translate(200, 100)">
+    <path d="M0,0 C20,-10 40,0 60,-10" stroke="#B3D9FF" stroke-width="2" fill="none" stroke-linecap="round">
+      <animate attributeName="stroke-opacity" values="0.4;0.8;0.4" dur="5s" repeatCount="indefinite"/>
+    </path>
+    <circle cx="60" cy="-10" r="4" fill="#4DA3FF">
+      <animate attributeName="r" values="3;5;3" dur="3s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+</svg>

@@ -1,0 +1,75 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 淡蓝色圆形背景 -->
+  <circle cx="100" cy="100" r="90" fill="#F0F7FF"/>
+  
+  <!-- 龙虾主体 -->
+  <g class="lobster">
+    <!-- 触须 - 从头顶两侧向上微微扬起，带自然柔和的弧度 -->
+    <path d="M95 40 C85 25 80 15 75 10" stroke="#409EFF" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <path d="M105 40 C115 25 120 15 125 10" stroke="#409EFF" stroke-width="2" stroke-linecap="round" fill="none"/>
+    
+    <!-- 头胸甲 - 龙虾标准的上窄下宽圆润梯形，线条流畅顺滑 -->
+    <path d="M90 35 C85 35 80 40 75 50 L70 75 C70 85 80 92 100 92 C120 92 130 85 130 75 L125 50 C120 40 115 35 110 35 Z" fill="url(#head-gradient)" stroke="#409EFF" stroke-width="2"/>
+    
+    <!-- 眼睛 - 圆润白色圆点，固定在头胸甲上半部分，左右完全对称 -->
+    <circle cx="85" cy="50" r="4" fill="white" stroke="#409EFF" stroke-width="1.5"/>
+    <circle cx="115" cy="50" r="4" fill="white" stroke="#409EFF" stroke-width="1.5"/>
+    
+    <!-- 大螯（钳子）- 龙虾标志性的大钳子，位于头胸甲下半部分左右两侧 -->
+    <!-- 左螯 - 粗壮圆润的螯柄 + 前端带开合缺口的圆润钳头 -->
+    <path d="M70 65 C60 70 50 85 50 100 C50 115 60 130 70 135" fill="#66B1FF" stroke="#409EFF" stroke-width="2"/>
+    <path d="M50 100 C45 105 45 115 55 120 C65 125 70 120 70 110 C70 100 65 95 50 100" fill="#66B1FF" stroke="#409EFF" stroke-width="2"/>
+    <!-- 右螯 - 粗壮圆润的螯柄 + 前端带开合缺口的圆润钳头 -->
+    <path d="M130 65 C140 70 150 85 150 100 C150 115 140 130 130 135" fill="#66B1FF" stroke="#409EFF" stroke-width="2"/>
+    <path d="M150 100 C155 105 155 115 145 120 C135 125 130 120 130 110 C130 100 135 95 150 100" fill="#66B1FF" stroke="#409EFF" stroke-width="2"/>
+    
+    <!-- 分节腹部 - 占整体40%，圆润弧形分节，自然收窄 -->
+    <!-- 第一节 -->
+    <path d="M85 92 C85 92 92 97 100 97 C108 97 115 92 115 92 L112 107 C112 107 106 110 100 110 C94 110 88 107 88 107 Z" fill="#66B1FF" stroke="#409EFF" stroke-width="2"/>
+    <!-- 第二节 -->
+    <path d="M88 107 C88 107 94 110 100 110 C106 110 112 107 112 107 L109 120 C109 120 104 122 100 122 C96 122 91 120 91 120 Z" fill="#66B1FF" stroke="#409EFF" stroke-width="2"/>
+    <!-- 第三节 -->
+    <path d="M91 120 C91 120 96 122 100 122 C104 122 109 120 109 120 L106 132 C106 132 103 133 100 133 C97 133 94 132 94 132 Z" fill="#66B1FF" stroke="#409EFF" stroke-width="2"/>
+    <!-- 第四节 -->
+    <path d="M94 132 C94 132 97 133 100 133 C103 133 106 132 106 132 L103 142 C103 142 101 143 100 143 C99 143 97 142 97 142 Z" fill="#66B1FF" stroke="#409EFF" stroke-width="2"/>
+    
+    <!-- 步足 - 3对，从头胸甲下方、腹部身体左右两侧长出 -->
+    <!-- 左侧步足 -->
+    <path d="M75 85 C65 95 58 105 55 115" stroke="#409EFF" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    <path d="M80 90 C70 100 63 110 60 120" stroke="#409EFF" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    <path d="M85 95 C75 105 68 115 65 125" stroke="#409EFF" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    <!-- 右侧步足 -->
+    <path d="M125 85 C135 95 142 105 145 115" stroke="#409EFF" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    <path d="M120 90 C130 100 137 110 140 120" stroke="#409EFF" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    <path d="M115 95 C125 105 132 115 135 125" stroke="#409EFF" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    
+    <!-- 扇形尾部 - 占整体20%，3片圆润尾叶 -->
+    <path d="M97 142 C95 147 92 154 88 160 C85 164 90 167 95 164 C98 162 100 157 100 152" fill="#66B1FF" stroke="#409EFF" stroke-width="2"/>
+    <path d="M100 143 C100 150 100 157 100 164 C100 170 105 170 108 164 C110 160 108 152 106 147" fill="#66B1FF" stroke="#409EFF" stroke-width="2"/>
+    <path d="M103 142 C105 147 108 154 112 160 C115 164 110 167 105 164 C102 162 100 157 100 152" fill="#66B1FF" stroke="#409EFF" stroke-width="2"/>
+    
+    <!-- 简约科技元素 - 数据点装饰 -->
+    <circle cx="60" cy="125" r="2.5" fill="#409EFF" opacity="0.5"/>
+    <circle cx="140" cy="125" r="2.5" fill="#409EFF" opacity="0.5"/>
+    <circle cx="70" cy="140" r="2" fill="#409EFF" opacity="0.3"/>
+    <circle cx="130" cy="140" r="2" fill="#409EFF" opacity="0.3"/>
+  </g>
+  
+  <!-- 渐变定义 -->
+  <defs>
+    <linearGradient id="head-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7EC1FF"/>
+      <stop offset="100%" stop-color="#66B1FF"/>
+    </linearGradient>
+  </defs>
+  
+  <style>
+    .lobster {
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+  </style>
+</svg>

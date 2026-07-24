@@ -1,0 +1,22 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 小龙虾身体 -->
+  <g class="crayfish">
+    <!-- 头部 -->
+    <rect x="25" y="20" width="50" height="30" rx="15" fill="#FF6B6B"/>
+    <!-- 眼睛 -->
+    <circle cx="35" cy="30" r="4" fill="white"/>
+    <circle cx="35" cy="30" r="2" fill="black"/>
+    <circle cx="65" cy="30" r="4" fill="white"/>
+    <circle cx="65" cy="30" r="2" fill="black"/>
+    <!-- 钳子 -->
+    <path d="M15 35 Q10 40 12.5 47.5 Q17.5 50 25 42.5" fill="#FF6B6B"/>
+    <path d="M85 35 Q90 40 87.5 47.5 Q82.5 50 75 42.5" fill="#FF6B6B"/>
+    <!-- 身体 -->
+    <rect x="35" y="50" width="30" height="20" rx="10" fill="#FF6B6B"/>
+    <!-- 尾巴 -->
+    <path d="M50 70 L40 85 L60 85 Z" fill="#FF6B6B"/>
+    <!-- 腿 -->
+    <path d="M40 60 L35 70" stroke="#FF6B6B" stroke-width="2"/>
+    <path d="M60 60 L65 70" stroke="#FF6B6B" stroke-width="2"/>
+  </g>
+</svg>

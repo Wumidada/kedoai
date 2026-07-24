@@ -1,0 +1,30 @@
+// 主题色
+$primary-color: #1E9CFF;
+$primary-light: #70D3FF;
+$primary-dark: #0DA8EF;
+$secondary-color: #7ABCD4;
+$background-color: #EDF2F7;
+$sidebar-bg-color: #CBD5E0;
+$main-content-bg-color: #FFFFFF;
+$content-bg-color: #FFFFFF;
+$text-color: #1A202C;
+$text-light: #4A5568;
+$border-color: #A0AEC0;
+$shadow-color: rgba(47, 192, 255, 0.05);
+$gradient-primary: linear-gradient(90deg, #2FC0FF, #70D3FF);
+$gradient-dark: linear-gradient(to bottom, #0DA8EF, #0B8CC8);
+
+:root {
+  --primary-color: #{$primary-color};
+  --primary-light: #{$primary-light};
+  --primary-dark: #{$primary-dark};
+  --secondary-color: #{$secondary-color};
+  --background-color: #{$background-color};
+  --sidebar-bg-color: #{$sidebar-bg-color};
+  --main-content-bg-color: #{$main-content-bg-color};
+  --content-bg-color: #{$content-bg-color};
+  --text-color: #{$text-color};
+  --text-light: #{$text-light};
+  --border-color: #{$border-color};
+  --shadow-color: #{$shadow-color};
+}

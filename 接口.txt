@@ -1,0 +1,332 @@
+1. KedoClaw模块
+1.1 产品详情
+接口地址: /Product/Detail
+请求方法: GET
+传递参数:
+prodId: string (产品ID，例如 "kedoclaw")
+返回参数:
+id: string (产品ID)
+name: string (产品名称，如 "KedoClaw一体机")
+price: number (价格)
+description: string (产品描述)
+configurations: Array (可选配置列表)
+images: Array (产品图片)
+
+1.2 查询产品服务套餐
+接口地址: /Order/QueryOnionProdServices
+请求方法: GET
+传递参数:
+F_ProdId: string (产品ID，例如 "kedoclaw")
+返回参数:
+services: Array (服务套餐列表)，每个套餐包含：
+id: string (套餐ID)
+name: string (套餐名称)
+price: number (套餐价格)
+description: string (套餐描述)
+features: Array (套餐包含的功能)
+
+2. 产品订购模块
+2.1 创建订单
+接口地址: /Order/Create_Order
+请求方法: POST
+传递参数:
+订单相关数据 (具体结构根据后端要求)
+返回参数:
+订单创建结果，包含订单ID和状态
+
+2.2 执行支付
+接口地址: /Order/Do_Payment
+请求方法: POST
+传递参数:
+支付相关数据 (具体结构根据后端要求)
+返回参数:
+支付执行结果，包含支付状态和支付信息
+
+3. 我的订单模块
+3.1 创建订单
+接口地址: /api/orders
+请求方法: POST
+传递参数:
+items: Array (订单商品列表)，每个商品包含：
+id: string (商品ID)
+name: string (商品名称)
+price: number (商品价格)
+quantity: number (购买数量)
+config: string (配置信息)
+subtotal: number (商品总额)
+shippingFee: number (运费)
+total: number (订单总金额)
+customerInfo: Object (客户信息):
+name: string (收货人姓名)
+phone: string (联系电话)
+address: string (收货地址)
+返回参数:
+id: string (订单ID)
+status: string (订单状态，如 "pending")
+createdAt: string (创建时间)
+
+3.2 获取订单列表
+接口地址: /api/orders
+请求方法: GET
+传递参数: 无
+返回参数:
+orders: Array (订单列表)，每个订单包含：
+id: string (订单ID)
+createdAt: string (创建时间)
+status: string (订单状态)
+total: number (订单总金额)
+items: Array (订单商品列表)
+
+3.3 获取单个订单
+接口地址: /api/orders/{orderId}
+请求方法: GET
+传递参数:
+orderId: string (订单ID)
+返回参数:
+id: string (订单ID)
+createdAt: string (创建时间)
+status: string (订单状态)
+items: Array (订单商品列表)
+subtotal: number (商品总额)
+shippingFee: number (运费)
+total: number (订单总金额)
+customerInfo: Object (客户信息)
+shippingInfo: Object (物流信息)
+
+3.4 更新订单状态
+接口地址: /api/orders/{orderId}/status
+请求方法: PATCH
+传递参数:
+orderId: string (订单ID)
+status: string (订单状态，如 "pending", "paid", "shipped", "completed", "cancelled")
+返回参数:
+success: boolean (操作是否成功)
+status: string (更新后的订单状态)
+
+3.5 取消订单
+接口地址: /api/orders/{orderId}/cancel
+请求方法: PATCH
+传递参数:
+orderId: string (订单ID)
+返回参数:
+success: boolean (操作是否成功)
+status: string (更新后的订单状态)
+
+4. 物流查询模块
+4.1 更新物流信息
+接口地址: /api/orders/{orderId}/shipping
+请求方法: PATCH
+传递参数:
+orderId: string (订单ID)
+carrier: string (快递公司)
+trackingNumber: string (物流单号)
+status: string (物流状态，如 "shipped")
+返回参数:
+success: boolean (操作是否成功)
+shippingInfo: Object (更新后的物流信息)
+
+4.2 查询物流轨迹
+接口地址: /api/orders/{orderId}/tracking
+请求方法: GET
+传递参数:
+orderId: string (	订单ID)
+返回参数:
+trackingNumber: string (物流单号)
+carrier: string (快递公司)
+traces: Array (物流轨迹列表)，每个轨迹包含：
+time: string (时间)
+location: string (地点)
+description: string (描述)
+
+5. 商家管理模块
+5.1 商家登录
+接口地址: /Merchant/Login
+请求方法: POST
+传递参数:
+username: string (商家用户名)
+password: string (商家密码)
+返回参数:
+token: string (认证令牌)
+merchantInfo: Object (商家信息)
+
+5.2 获取商家订单列表
+接口地址: /Merchant/Orders
+请求方法: GET
+传递参数:
+status: string (可选，订单状态筛选)
+startDate: string (可选，开始日期)
+endDate: string (可选，结束日期)
+返回参数:
+orders: Array (订单列表)，每个订单包含：
+id: string (订单ID)
+createdAt: string (创建时间)
+status: string (订单状态)
+customerInfo: Object (客户信息)
+total: number (订单总金额)
+
+5.3 更新订单状态
+接口地址: /Merchant/Orders/{orderId}/status
+请求方法: PATCH
+传递参数:
+orderId: string (订单ID)
+status: string (订单状态，如 "paid", "shipped", "completed")
+返回参数:
+success: boolean (操作是否成功)
+status: string (更新后的订单状态)
+
+5.4 销售统计
+接口地址: /Merchant/Statistics/Sales
+请求方法: GET
+传递参数:
+startDate: string (开始日期)
+endDate: string (结束日期)
+返回参数:
+totalSales: number (总销售额)
+orderCount: number (订单数量)
+salesTrend: Array (销售趋势数据)
+topProducts: Array (热销产品列表)
+
+
+## 6. 技能商城模块
+### 6.1 技能商店浏览
+- 接口地址 ： /api/skills
+- 请求方法 ：GET
+- 传递参数 ：
+  - category ：string (可选，技能分类)
+  - keyword ：string (可选，搜索关键词)
+  - page ：number (可选，页码)
+  - pageSize ：number (可选，每页数量)
+- 返回参数 ：
+  - skills ：Array (技能列表)，每个技能包含：
+    - id ：string (技能ID)
+    - name ：string (技能名称)
+    - description ：string (技能描述)
+    - category ：string (技能分类)
+    - rating ：number (技能评分)
+    - icon ：string (技能图标URL)
+    - installed ：boolean (是否已安装)
+  - total ：number (总技能数)
+
+### 6.2 技能分类
+- 接口地址 ： /api/skills/categories
+- 请求方法 ：GET
+- 传递参数 ：无
+- 返回参数 ：
+  - categories ：Array (分类列表)，每个分类包含：
+    - id ：string (分类ID)
+    - name ：string (分类名称)
+
+### 6.3 安装技能
+- 接口地址 ： /api/skills/install
+- 请求方法 ：POST
+- 传递参数 ：
+  - skillId ：string (技能ID)
+  - userId ：string (用户ID)
+- 返回参数 ：
+  - success ：boolean (操作是否成功)
+  - skill ：object (安装的技能信息)
+
+### 6.4 卸载技能
+- 接口地址 ： /api/skills/uninstall
+- 请求方法 ：POST
+- 传递参数 ：
+  - skillId ：string (技能ID)
+  - userId ：string (用户ID)
+- 返回参数 ：
+  - success ：boolean (操作是否成功)
+
+### 6.5 我的技能
+- 接口地址 ： /api/skills/my
+- 请求方法 ：GET
+- 传递参数 ：
+  - userId ：string (用户ID)
+  - type ：string (可选，技能类型：added/created)
+  - keyword ：string (可选，搜索关键词)
+- 返回参数 ：
+  - skills ：Array (技能列表)，每个技能包含：
+    - id ：string (技能ID)
+    - name ：string (技能名称)
+    - description ：string (技能描述)
+    - icon ：string (技能图标URL)
+    - type ：string (技能类型)
+    - createdAt ：string (创建时间)
+
+### 6.6 创建技能
+- 接口地址 ： /api/skills
+- 请求方法 ：POST
+- 传递参数 ：
+  - userId ：string (用户ID)
+  - name ：string (技能名称)
+  - description ：string (技能描述)
+  - category ：string (技能分类)
+  - config ：object (技能配置)
+- 返回参数 ：
+  - success ：boolean (操作是否成功)
+  - skill ：object (创建的技能信息)
+
+### 6.7 编辑技能
+- 接口地址 ： /api/skills/{skillId}
+- 请求方法 ：PUT
+- 传递参数 ：
+  - skillId ：string (技能ID，路径参数)
+  - name ：string (技能名称)
+  - description ：string (技能描述)
+  - category ：string (技能分类)
+  - config ：object (技能配置)
+- 返回参数 ：
+  - success ：boolean (操作是否成功)
+  - skill ：object (更新后的技能信息)
+
+### 6.8 移除技能
+- 接口地址 ： /api/skills/{skillId}
+- 请求方法 ：DELETE
+- 传递参数 ：
+  - skillId ：string (技能ID，路径参数)
+  - userId ：string (用户ID)
+- 返回参数 ：
+  - success ：boolean (操作是否成功)
+
+### 6.9 购买记录
+- 接口地址 ： /api/skills/purchase-history
+- 请求方法 ：GET
+- 传递参数 ：
+  - userId ：string (用户ID)
+  - page ：number (可选，页码)
+  - pageSize ：number (可选，每页数量)
+- 返回参数 ：
+  - records ：Array (购买记录列表)，每条记录包含：
+    - id ：string (记录ID)
+    - skillId ：string (技能ID)
+    - skillName ：string (技能名称)
+    - price ：number (购买价格)
+    - purchaseTime ：string (购买时间)
+  - total ：number (总记录数)
+
+### 1. KedoClaw模块
+- 1.3 获取产品配置选项 ： GET /Product/Configurations
+  - 传递参数： prodId
+  - 返回参数：产品的CPU、内存等配置选项列表
+
+### 2. 产品订购模块
+- 2.3 支付回调 ： POST /Order/Payment/Callback
+  - 传递参数：支付平台回调数据
+  - 返回参数：回调处理结果
+
+### 5. 商家管理模块
+- 5.5 商家登出 ： POST /Merchant/Logout
+  - 传递参数： token
+  - 返回参数： success
+
+支付状态查询接口 ：用于前端轮询检查支付是否完成，例如：
+- 接口地址 ： /Order/QueryPaymentStatus
+- 请求方法 ：GET
+- 传递参数 ： orderId (订单ID)
+- 返回参数 ： payStatus (支付状态)、 orderStatus (订单状态)、 paidAt (支付时间)
+
+
+
+
+
+
+
+

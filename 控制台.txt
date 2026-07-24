@@ -1,0 +1,7 @@
+External.vue:114 iframeSrc https://www.kedowen.com:8666/?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiIwYTgzMzE4OC05NTRjLTQyOWUtYmNlZS1lZjcyMzRkMWE5NWMiLCJBY2NvdW50IjoiMTgwMTM1MzcwODEiLCJpYXQiOjE3NzkzNjUxMDcsIm5iZiI6MTc3OTM2NTEwNywiZXhwIjoxNzc5MzY1MTY3LCJpc3MiOiJkb3RuZXRjaGluYSIsImF1ZCI6InBvd2VyYnkgRnVyaW9uIn0.vANTRJEK17yWr-fodPUTr_Nn3uZzjvhbjwGJjDb0sO4&refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmIjoiZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5IiwiZSI6InZBTlRSSkVLMTd5V3ItZm9kUFVUcl9ObjN1WnpqdmhiandHSmpEYjBzTzQiLCJzIjoxMDIsImwiOjMsImsiOiJRaU8iLCJpYXQiOjE3NzkzNjUxMDcsIm5iZiI6MTc3OTM2NTEwNywiZXhwIjoxNzc5MzcxMTA3LCJpc3MiOiJkb3RuZXRjaGluYSIsImF1ZCI6InBvd2VyYnkgRnVyaW9uIn0.Ver81NhbnIcJgo5aRSHbvC0dPas-5m73iFS0PpGEGvc
+:3000/#/kedoknowledgebase:1 Tracking Prevention blocked access to storage for https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css.
+:3000/#/kedoknowledgebase:1 Tracking Prevention blocked access to storage for https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css.
+:3000/#/kedoknowledgebase:1 Tracking Prevention blocked access to storage for https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css.
+:3000/#/kedoknowledgebase:1 Tracking Prevention blocked access to storage for https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css.
+External.vue:151 Received message from iframe: Object
+index-oooudFZb.css:1  GET https://www.kedowen.com:8666/assets/remixicon-CZw4FkzQ.woff2?t=1769685282643 net::ERR_ABORTED 404 (Not Found)

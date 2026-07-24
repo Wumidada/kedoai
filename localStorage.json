@@ -1,0 +1,3 @@
+{
+  "kedo_orders": "[{\"id\":\"KD202603240812\",\"createdAt\":\"2026-03-24T08:12:05.000Z\",\"status\":\"shipped\",\"items\":[{\"id\":\"1\",\"name\":\"KedoClaw 智能盒子\",\"price\":0.01,\"quantity\":1,\"config\":\"CPU: cpu2, 内存: memory1\"}],\"subtotal\":0.01,\"shippingFee\":0,\"total\":0.01,\"shippingInfo\":{\"carrier\":\"顺丰速运\",\"trackingNumber\":\"SF5108692139876\",\"status\":\"运输中\",\"estimatedDelivery\":\"2026/3/30\"},\"paidAt\":\"2026-03-27T05:11:23.029Z\",\"shippedAt\":\"2026-03-27T05:11:23.041Z\"}]"
+}

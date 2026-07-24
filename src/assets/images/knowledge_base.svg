@@ -1,0 +1,248 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300">
+  <defs>
+    <!-- 渐变定义 -->
+    <linearGradient id="libraryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1E9CFF;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#0DA8EF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#70D3FF;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="bookGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4299E1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2B6CB0;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="shelfGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#60A5FA;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3B82F6;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 发光效果 -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- 扫描效果 -->
+    <linearGradient id="scanGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:rgba(30, 156, 255, 0);stop-opacity:0" />
+      <stop offset="40%" style="stop-color:rgba(30, 156, 255, 0.8);stop-opacity:0.8" />
+      <stop offset="60%" style="stop-color:rgba(30, 156, 255, 0.8);stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:rgba(30, 156, 255, 0);stop-opacity:0" />
+    </linearGradient>
+    
+    <!-- 知识库动画 -->
+    <style>
+      .search-highlight {
+        animation: searchHighlight 2s infinite ease-in-out;
+      }
+      
+      .knowledge-float {
+        animation: knowledgeFloat 3s infinite ease-in-out;
+      }
+      
+      .shelf-glow {
+        animation: shelfGlow 4s infinite ease-in-out;
+      }
+      
+      .scan-animation {
+        animation: scanBooks 4s infinite ease-in-out;
+      }
+      
+      @keyframes searchHighlight {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.2); opacity: 0.8; }
+      }
+      
+      @keyframes knowledgeFloat {
+        0%, 100% { transform: translateY(0px); opacity: 0.7; }
+        50% { transform: translateY(-5px); opacity: 1; }
+      }
+      
+      @keyframes shelfGlow {
+        0%, 100% { filter: drop-shadow(0 0 5px rgba(30, 156, 255, 0.3)); }
+        50% { filter: drop-shadow(0 0 15px rgba(30, 156, 255, 0.6)); }
+      }
+      
+      @keyframes scanBooks {
+        0% { transform: translateY(-20px); opacity: 0; }
+        20% { opacity: 1; }
+        80% { opacity: 1; }
+        100% { transform: translateY(180px); opacity: 0; }
+      }
+    </style>
+  </defs>
+  
+  <!-- 背景圆 -->
+  <circle cx="150" cy="150" r="130" fill="none" stroke="rgba(30, 156, 255, 0.1)" stroke-width="2"/>
+  
+  <!-- 图书馆书架 - 三排 -->
+  <g class="shelf-glow">
+    <!-- 主书架框架 -->
+    <rect x="60" y="70" width="180" height="160" rx="10" fill="none" stroke="url(#libraryGradient)" stroke-width="4" opacity="0.8"/>
+    
+    <!-- 书架隔板 - 三排 -->
+    <rect x="65" y="120" width="170" height="6" fill="url(#shelfGradient)" opacity="0.9"/>
+    <rect x="65" y="180" width="170" height="6" fill="url(#shelfGradient)" opacity="0.9"/>
+    
+    <!-- 第一排书籍 -->
+    <rect x="75" y="80" width="16" height="35" rx="3" fill="url(#libraryGradient)" transform="rotate(-1 83 97)">
+      <animate attributeName="opacity" values="0.8;1;0.8" dur="4s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="95" y="80" width="14" height="35" rx="3" fill="url(#bookGradient)">
+      <animate attributeName="opacity" values="0.8;1;0.8" dur="4s" begin="0.5s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="113" y="80" width="18" height="35" rx="3" fill="url(#shelfGradient)" transform="rotate(1 122 97)">
+      <animate attributeName="opacity" values="0.8;1;0.8" dur="4s" begin="1s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="135" y="80" width="15" height="35" rx="3" fill="url(#libraryGradient)">
+      <animate attributeName="opacity" values="0.8;1;0.8" dur="4s" begin="1.5s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="154" y="80" width="17" height="35" rx="3" fill="url(#bookGradient)" transform="rotate(-1 162 97)">
+      <animate attributeName="opacity" values="0.8;1;0.8" dur="4s" begin="2s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="175" y="80" width="16" height="35" rx="3" fill="url(#shelfGradient)">
+      <animate attributeName="opacity" values="0.8;1;0.8" dur="4s" begin="2.5s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="195" y="80" width="19" height="35" rx="3" fill="url(#libraryGradient)" transform="rotate(1 204 97)">
+      <animate attributeName="opacity" values="0.8;1;0.8" dur="4s" begin="3s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="218" y="80" width="14" height="35" rx="3" fill="url(#bookGradient)">
+      <animate attributeName="opacity" values="0.8;1;0.8" dur="4s" begin="3.5s" repeatCount="indefinite"/>
+    </rect>
+    
+    <!-- 第二排书籍 -->
+    <rect x="75" y="140" width="17" height="35" rx="3" fill="url(#bookGradient)"/>
+    <rect x="96" y="140" width="15" height="35" rx="3" fill="url(#shelfGradient)" transform="rotate(-1 103 157)"/>
+    <rect x="115" y="140" width="16" height="35" rx="3" fill="url(#libraryGradient)"/>
+    <rect x="135" y="140" width="18" height="35" rx="3" fill="url(#bookGradient)" transform="rotate(1 144 157)"/>
+    <rect x="157" y="140" width="14" height="35" rx="3" fill="url(#shelfGradient)"/>
+    <rect x="175" y="140" width="17" height="35" rx="3" fill="url(#libraryGradient)" transform="rotate(-1 183 157)"/>
+    <rect x="196" y="140" width="15" height="35" rx="3" fill="url(#bookGradient)"/>
+    <rect x="215" y="140" width="16" height="35" rx="3" fill="url(#shelfGradient)" transform="rotate(1 223 157)"/>
+    
+    <!-- 第三排书籍 -->
+    <rect x="75" y="190" width="18" height="35" rx="3" fill="url(#shelfGradient)"/>
+    <rect x="97" y="190" width="14" height="35" rx="3" fill="url(#libraryGradient)" transform="rotate(-1 104 207)"/>
+    <rect x="115" y="190" width="17" height="35" rx="3" fill="url(#bookGradient)"/>
+    <rect x="136" y="190" width="16" height="35" rx="3" fill="url(#shelfGradient)" transform="rotate(1 144 207)"/>
+    <rect x="156" y="190" width="15" height="35" rx="3" fill="url(#libraryGradient)"/>
+    <rect x="175" y="190" width="18" height="35" rx="3" fill="url(#bookGradient)" transform="rotate(-1 184 207)"/>
+    <rect x="197" y="190" width="14" height="35" rx="3" fill="url(#shelfGradient)"/>
+    <rect x="215" y="190" width="16" height="35" rx="3" fill="url(#libraryGradient)" transform="rotate(1 223 207)"/>
+  </g>
+  
+  <!-- 中央搜索区域 -->
+  <g transform="translate(150, 150)">
+    <!-- 搜索背景圆 -->
+    <circle cx="0" cy="0" r="45" fill="white" opacity="0.95" stroke="url(#libraryGradient)" stroke-width="4" class="search-highlight"/>
+    
+    <!-- 搜索放大镜 -->
+    <g transform="translate(0, 0) scale(1.3)" class="search-highlight">
+      <!-- 放大镜镜片 -->
+      <circle cx="-5" cy="-5" r="12" fill="white" stroke="#1E9CFF" stroke-width="4"/>
+      <circle cx="-5" cy="-5" r="8" fill="rgba(30, 156, 255, 0.1)"/>
+      
+      <!-- 放大镜手柄 -->
+      <line x1="4" y1="4" x2="12" y2="12" stroke="#1E9CFF" stroke-width="5" stroke-linecap="round"/>
+      <line x1="4" y1="4" x2="12" y2="12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+      
+      <!-- 镜片反光 -->
+      <circle cx="-8" cy="-8" r="3" fill="rgba(255, 255, 255, 0.8)"/>
+    </g>
+  </g>
+  
+
+  
+  <!-- 文档相关图标浮动 -->
+  <g class="knowledge-float">
+    <!-- PDF文档图标 -->
+    <g transform="translate(60, 50)" opacity="0.8">
+      <circle cx="15" cy="15" r="12" fill="rgba(30, 156, 255, 0.2)" stroke="url(#libraryGradient)" stroke-width="2"/>
+      <g transform="translate(15, 15)">
+        <rect x="-5" y="-6" width="10" height="12" rx="1" fill="url(#libraryGradient)" opacity="0.9"/>
+        <polygon points="-5,-6 -1,-6 3,-2 3,6 -5,6" fill="white" opacity="0.9"/>
+        <text x="0" y="2" text-anchor="middle" font-family="Arial" font-size="6" fill="url(#libraryGradient)" font-weight="bold">PDF</text>
+        <polygon points="-1,-6 -1,-2 3,-2" fill="url(#libraryGradient)" opacity="0.7"/>
+      </g>
+    </g>
+    
+    <!-- Word文档图标 -->
+    <g transform="translate(190, 60)" opacity="0.8" style="animation-delay: 1s;">
+      <circle cx="15" cy="15" r="12" fill="rgba(13, 168, 239, 0.2)" stroke="url(#bookGradient)" stroke-width="2"/>
+      <g transform="translate(15, 15)">
+        <rect x="-5" y="-6" width="10" height="12" rx="1" fill="url(#bookGradient)" opacity="0.9"/>
+        <rect x="-4" y="-5" width="8" height="10" fill="white" opacity="0.9"/>
+        <rect x="-3" y="-3" width="6" height="1" fill="url(#bookGradient)"/>
+        <rect x="-3" y="-1" width="5" height="1" fill="url(#bookGradient)"/>
+        <rect x="-3" y="1" width="4" height="1" fill="url(#bookGradient)"/>
+        <rect x="-3" y="3" width="6" height="1" fill="url(#bookGradient)"/>
+      </g>
+    </g>
+    
+    <!-- Excel表格图标 -->
+    <g transform="translate(40, 220)" opacity="0.8" style="animation-delay: 2s;">
+      <circle cx="15" cy="15" r="12" fill="rgba(112, 211, 255, 0.2)" stroke="url(#shelfGradient)" stroke-width="2"/>
+      <g transform="translate(15, 15)">
+        <rect x="-5" y="-6" width="10" height="12" rx="1" fill="url(#shelfGradient)" opacity="0.9"/>
+        <rect x="-4" y="-5" width="8" height="10" fill="white" opacity="0.9"/>
+        <!-- 表格网格 -->
+        <g stroke="url(#shelfGradient)" stroke-width="0.5" opacity="0.8">
+          <line x1="-4" y1="-2" x2="4" y2="-2"/>
+          <line x1="-4" y1="0" x2="4" y2="0"/>
+          <line x1="-4" y1="2" x2="4" y2="2"/>
+          <line x1="-1" y1="-5" x2="-1" y2="5"/>
+          <line x1="1" y1="-5" x2="1" y2="5"/>
+        </g>
+      </g>
+    </g>
+    
+    <!-- 文档集合图标 -->
+    <g transform="translate(200, 220)" opacity="0.8" style="animation-delay: 3s;">
+      <circle cx="15" cy="15" r="12" fill="rgba(30, 156, 255, 0.2)" stroke="url(#libraryGradient)" stroke-width="2"/>
+      <g transform="translate(15, 15)">
+        <!-- 后面的文档 -->
+        <rect x="-3" y="-4" width="8" height="10" rx="1" fill="url(#libraryGradient)" opacity="0.6"/>
+        <rect x="-4" y="-5" width="8" height="10" rx="1" fill="url(#libraryGradient)" opacity="0.7"/>
+        <!-- 前面的文档 -->
+        <rect x="-5" y="-6" width="8" height="10" rx="1" fill="url(#libraryGradient)" opacity="0.9"/>
+        <rect x="-4" y="-5" width="6" height="8" fill="white" opacity="0.9"/>
+        <rect x="-3" y="-3" width="4" height="1" fill="url(#libraryGradient)" opacity="0.6"/>
+        <rect x="-3" y="-1" width="3" height="1" fill="url(#libraryGradient)" opacity="0.6"/>
+        <rect x="-3" y="1" width="4" height="1" fill="url(#libraryGradient)" opacity="0.6"/>
+      </g>
+    </g>
+  </g>
+  
+  <!-- 知识连接线 -->
+  <g opacity="0.3">
+    <path d="M150 115 Q100 100 80 150" stroke="url(#libraryGradient)" stroke-width="2" fill="none">
+      <animate attributeName="opacity" values="0.2;0.5;0.2" dur="4s" repeatCount="indefinite"/>
+    </path>
+    <path d="M150 115 Q200 100 220 150" stroke="url(#bookGradient)" stroke-width="2" fill="none">
+      <animate attributeName="opacity" values="0.2;0.5;0.2" dur="4s" begin="1s" repeatCount="indefinite"/>
+    </path>
+    <path d="M150 185 Q100 200 80 150" stroke="url(#shelfGradient)" stroke-width="2" fill="none">
+      <animate attributeName="opacity" values="0.2;0.5;0.2" dur="4s" begin="2s" repeatCount="indefinite"/>
+    </path>
+    <path d="M150 185 Q200 200 220 150" stroke="url(#libraryGradient)" stroke-width="2" fill="none">
+      <animate attributeName="opacity" values="0.2;0.5;0.2" dur="4s" begin="3s" repeatCount="indefinite"/>
+    </path>
+  </g>
+  
+  <!-- 搜索光波效果 -->
+  <g transform="translate(150, 150)">
+    <circle cx="0" cy="0" r="50" fill="none" stroke="url(#libraryGradient)" stroke-width="3" opacity="0.4">
+      <animate attributeName="r" values="45;75;45" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.6;0;0.6" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    
+    <circle cx="0" cy="0" r="65" fill="none" stroke="url(#bookGradient)" stroke-width="2" opacity="0.3">
+      <animate attributeName="r" values="60;95;60" dur="4s" begin="1s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.5;0;0.5" dur="4s" begin="1s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+</svg> 

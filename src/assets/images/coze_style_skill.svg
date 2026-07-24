@@ -1,0 +1,26 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景渐变 -->
+  <defs>
+    <linearGradient id="coze-gradient" x1="0" y1="0" x2="200" y2="200" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6366F1"/>
+      <stop offset="0.5" stop-color="#EC4899"/>
+      <stop offset="1" stop-color="#F59E0B"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- 背景圆形 -->
+  <circle cx="100" cy="100" r="90" fill="url(#coze-gradient)"/>
+  
+  <!-- 技能图标主体 -->
+  <g>
+    <!-- 六边形底座 -->
+    <path d="M100 20L160 60L160 140L100 180L40 140L40 60L100 20Z" fill="rgba(255,255,255,0.2)"/>
+    
+    <!-- 中央图标 - 灯泡形状 -->
+    <path d="M100 50C110 50 120 55 125 65L130 85C130 95 125 105 115 110C115 125 105 140 90 140C75 140 65 125 65 110C55 105 50 95 50 85L55 65C60 55 70 50 80 50C85 50 90 50 100 50Z" fill="white"/>
+    <path d="M90 140V160H110V140H90Z" fill="white"/>
+    
+    <!-- 闪电效果 -->
+    <path d="M95 80L100 60L105 80L120 75L105 90L110 110L95 95L80 110L85 90L70 75L85 80L95 80Z" fill="#FFD700"/>
+  </g>
+</svg>

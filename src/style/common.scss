@@ -1,0 +1,53 @@
+// Define all color variables
+$file-pdf-color: #ff5555;
+$file-doc-color: #2b98f0;
+$file-docx-color: #1d629a;
+$file-txt-color: #767676;
+$library-product-color: #67c23a;
+$library-technology-color: #19a2dd;
+$library-customer-color: #8e44ad;
+$library-other-color: #f39c12;
+
+.file-icon {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 16px;
+}
+
+.file-icon-pdf {
+  background-color: $file-pdf-color;
+}
+
+.file-icon-doc {
+  background-color: $file-doc-color;
+}
+
+.file-icon-docx {
+  background-color: $file-docx-color;
+}
+
+.file-icon-txt {
+  background-color: $file-txt-color;
+}
+
+.library-icon-product {
+  background-color: $library-product-color;
+}
+
+.library-icon-technology {
+  background-color: $library-technology-color;
+}
+
+.library-icon-customer {
+  background-color: $library-customer-color;
+}
+
+.library-icon-other {
+  background-color: $library-other-color;
+}

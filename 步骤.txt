@@ -1,0 +1,162 @@
+# 步骤3：认证令牌管理详细步骤
+根据您提供的截图，前端已经完成了大部分配置，包括跨域设置和认证令牌管理。现在我们来详细说明认证令牌管理的具体步骤：
+
+## 1. 令牌获取（登录接口）
+前端需要调用后端的登录接口获取令牌：
+// auth.ts
+export async function login(username: string, password: string) {
+  try {
+    const response = await fetch('http://localhost:5186/api/Auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ username, password })
+    });
+    
+    if (!response.ok) {
+      throw new Error('登录失败');
+    }
+    
+    const data = await response.json();
+    // 存储令牌
+    localStorage.setItem('token', data.accessToken);
+    return data;
+  } catch (error) {
+    console.error('登录错误:', error);
+    throw error;
+  }
+}
+## 2. 令牌存储
+使用localStorage存储令牌，确保页面刷新后仍然保持登录状态：
+// 登录成功后存储令牌
+localStorage.setItem('token', data.accessToken);
+
+// 检查令牌是否存在
+const token = localStorage.getItem('token');
+if (token) {
+  // 用户已登录
+} else {
+  // 用户未登录
+}
+## 3. 令牌使用（请求拦截器）
+在每次请求中自动添加令牌到请求头：
+// api/index.ts
+import axios from 'axios';
+
+const api = axios.create({
+  baseURL: 'http://localhost:5186/api',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  withCredentials: true
+});
+
+// 请求拦截器 - 添加认证令牌
+api.interceptors.request.use(config => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+export default api;
+## 4. 令牌过期处理
+处理令牌过期的情况，当收到401错误时跳转到登录页面：
+// 响应拦截器 - 处理401错误
+api.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response && error.response.status === 401) {
+      // 令牌过期，清除令牌并跳转到登录页面
+      localStorage.removeItem('token');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
+## 5. 令牌刷新
+实现令牌刷新功能，当令牌即将过期时自动刷新：
+// auth.ts
+export async function refreshToken() {
+  try {
+    const response = await fetch('http://localhost:5186/api/Auth/refresh', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify({
+        refreshToken: localStorage.getItem('refreshToken')
+      })
+    });
+    
+    if (!response.ok) {
+      throw new Error('刷新令牌失败');
+    }
+    
+    const data = await response.json();
+    // 更新令牌
+    localStorage.setItem('token', data.accessToken);
+    localStorage.setItem('refreshToken', data.refreshToken);
+    return data;
+  } catch (error) {
+    console.error('刷新令牌错误:', error);
+    // 刷新失败，跳转到登录页面
+    localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
+    window.location.href = '/login';
+    throw error;
+  }
+}
+## 6. 令牌清理（登出）
+用户登出时清除令牌：
+// auth.ts
+export function logout() {
+  // 清除令牌
+  localStorage.removeItem('token');
+  localStorage.removeItem('refreshToken');
+  // 跳转到登录页面
+  window.location.href = '/login';
+}
+## 7. 测试步骤
+1. 启动后端服务 ：
+   
+   ```
+   cd F:\集成接口
+   \IntegrationAPI\IntegrationAPI
+   dotnet run
+   ```
+2. 启动前端服务 ：
+   
+   ```
+   npm run dev
+   ```
+3. 测试登录 ：
+   
+   - 打开前端网站
+   - 输入用户名：admin，密码：123456
+   - 点击登录
+   - 确认能够成功登录并获取令牌
+4. 测试令牌存储 ：
+   
+   - 打开浏览器开发者工具
+   - 切换到"应用"标签
+   - 查看localStorage，确认token已存储
+5. 测试令牌使用 ：
+   
+   - 测试需要认证的接口
+   - 查看网络请求，确认Authorization头已添加
+6. 测试令牌过期 ：
+   
+   - 修改令牌有效期为1秒（在后端代码中）
+   - 等待1秒后测试接口
+   - 确认是否自动跳转到登录页面
+## 8. 注意事项
+- 令牌安全性 ：令牌存储在localStorage中，虽然方便但存在一定安全风险，生产环境建议使用更安全的存储方式
+- 令牌过期时间 ：根据业务需求设置合理的令牌过期时间
+- 刷新令牌 ：实现刷新令牌机制，提高用户体验
+- 错误处理 ：完善错误处理，确保用户体验
+- HTTPS ：生产环境使用HTTPS，防止令牌被窃取
+通过以上步骤，前端应该能够正确管理认证令牌，实现安全的用户认证功能。如果您在测试过程中遇到任何问题，请随时告诉我。

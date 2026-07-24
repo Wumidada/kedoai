@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- 渐变定义 -->
+    <linearGradient id="primaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1E9CFF"/>
+      <stop offset="100%" style="stop-color:#0DA8EF"/>
+    </linearGradient>
+    
+    <linearGradient id="secondaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#70D3FF"/>
+      <stop offset="100%" style="stop-color:#1E9CFF"/>
+    </linearGradient>
+    
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#A0F5FF"/>
+      <stop offset="100%" style="stop-color:#70D3FF"/>
+    </linearGradient>
+
+    <!-- 柔和阴影 -->
+    <filter id="softShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#1E9CFF" flood-opacity="0.3"/>
+    </filter>
+    
+    <!-- 发光效果 -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- 背景光环 -->
+  <circle cx="100" cy="100" r="85" fill="url(#primaryGradient)" opacity="0.05">
+    <animate attributeName="r" values="80;90;80" dur="6s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- 主要工作流路径 -->
+  <path d="M30 100 Q100 60 170 100" stroke="url(#accentGradient)" stroke-width="2" fill="none" opacity="0.4">
+    <animate attributeName="opacity" values="0.2;0.6;0.2" dur="4s" repeatCount="indefinite"/>
+  </path>
+  
+  <path d="M30 100 Q100 140 170 100" stroke="url(#accentGradient)" stroke-width="2" fill="none" opacity="0.4">
+    <animate attributeName="opacity" values="0.2;0.6;0.2" dur="4s" begin="2s" repeatCount="indefinite"/>
+  </path>
+
+  <!-- 输入节点 -->
+  <g transform="translate(30, 100)">
+    <circle cx="0" cy="0" r="18" fill="url(#primaryGradient)" filter="url(#softShadow)">
+      <animate attributeName="r" values="16;20;16" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <!-- 输入图标 -->
+    <g transform="translate(-6, -6)">
+      <rect x="0" y="0" width="12" height="8" rx="2" fill="white" opacity="0.9"/>
+      <rect x="2" y="2" width="8" height="1" rx="0.5" fill="url(#primaryGradient)"/>
+      <rect x="2" y="4" width="6" height="1" rx="0.5" fill="url(#primaryGradient)"/>
+      <rect x="2" y="6" width="4" height="1" rx="0.5" fill="url(#primaryGradient)"/>
+      <!-- 箭头 -->
+      <path d="M10 10 L14 10 M12 8 L14 10 L12 12" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    </g>
+  </g>
+
+  <!-- 中央处理器 -->
+  <g transform="translate(100, 100)">
+    <circle cx="0" cy="0" r="25" fill="url(#primaryGradient)" filter="url(#glow)">
+      <animate attributeName="r" values="23;27;23" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    
+    <!-- 处理器核心 -->
+    <circle cx="0" cy="0" r="15" fill="white" opacity="0.95"/>
+    
+    <!-- AI处理指示器 -->
+    <g opacity="0.8">
+      <!-- 中央点 -->
+      <circle cx="0" cy="0" r="3" fill="url(#primaryGradient)">
+        <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
+      </circle>
+      
+      <!-- 环绕点 -->
+      <circle cx="0" cy="-8" r="2" fill="url(#secondaryGradient)">
+        <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" begin="0.3s" repeatCount="indefinite"/>
+        <animateTransform attributeName="transform" type="rotate" values="0;360" dur="8s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="7" cy="4" r="2" fill="url(#secondaryGradient)">
+        <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" begin="0.6s" repeatCount="indefinite"/>
+        <animateTransform attributeName="transform" type="rotate" values="0;360" dur="8s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="-7" cy="4" r="2" fill="url(#secondaryGradient)">
+        <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" begin="0.9s" repeatCount="indefinite"/>
+        <animateTransform attributeName="transform" type="rotate" values="0;360" dur="8s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+  </g>
+
+  <!-- 上分支处理节点 -->
+  <g transform="translate(150, 70)">
+    <circle cx="0" cy="0" r="16" fill="url(#secondaryGradient)" filter="url(#softShadow)">
+      <animate attributeName="r" values="14;18;14" dur="3.5s" begin="1s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.8;1;0.8" dur="3.5s" begin="1s" repeatCount="indefinite"/>
+    </circle>
+    <!-- 分析图标 -->
+    <g transform="translate(-5, -4)">
+      <rect x="0" y="6" width="2" height="2" fill="white"/>
+      <rect x="3" y="4" width="2" height="4" fill="white"/>
+      <rect x="6" y="2" width="2" height="6" fill="white"/>
+      <rect x="9" y="0" width="2" height="8" fill="white"/>
+    </g>
+  </g>
+
+  <!-- 下分支处理节点 -->
+  <g transform="translate(150, 130)">
+    <circle cx="0" cy="0" r="16" fill="url(#secondaryGradient)" filter="url(#softShadow)">
+      <animate attributeName="r" values="14;18;14" dur="3.5s" begin="1.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.8;1;0.8" dur="3.5s" begin="1.5s" repeatCount="indefinite"/>
+    </circle>
+    <!-- 齿轮图标 -->
+    <g transform="translate(-6, -6)">
+      <circle cx="6" cy="6" r="4" fill="none" stroke="white" stroke-width="1.5"/>
+      <circle cx="6" cy="6" r="1.5" fill="white"/>
+      <!-- 齿轮齿 -->
+      <rect x="5.5" y="0" width="1" height="2" fill="white"/>
+      <rect x="5.5" y="10" width="1" height="2" fill="white"/>
+      <rect x="0" y="5.5" width="2" height="1" fill="white"/>
+      <rect x="10" y="5.5" width="2" height="1" fill="white"/>
+      
+      <animateTransform attributeName="transform" type="rotate" values="0 6 6;360 6 6" dur="6s" repeatCount="indefinite"/>
+    </g>
+  </g>
+
+  <!-- 输出节点 -->
+  <g transform="translate(170, 100)">
+    <circle cx="0" cy="0" r="18" fill="url(#accentGradient)" filter="url(#softShadow)">
+      <animate attributeName="r" values="16;20;16" dur="3s" begin="2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.9;1;0.9" dur="3s" begin="2s" repeatCount="indefinite"/>
+    </circle>
+    <!-- 输出图标 -->
+    <g transform="translate(-8, -6)">
+      <!-- 文档 -->
+      <rect x="0" y="0" width="12" height="8" rx="2" fill="white" opacity="0.9"/>
+      <rect x="2" y="2" width="8" height="1" rx="0.5" fill="url(#accentGradient)"/>
+      <rect x="2" y="4" width="6" height="1" rx="0.5" fill="url(#accentGradient)"/>
+      <rect x="2" y="6" width="4" height="1" rx="0.5" fill="url(#accentGradient)"/>
+      <!-- 下载箭头 -->
+      <path d="M14 10 L14 14 M12 12 L14 14 L16 12" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    </g>
+  </g>
+
+  <!-- 连接线和流动效果 -->
+  <!-- 主输入到处理器 -->
+  <line x1="48" y1="100" x2="75" y2="100" stroke="url(#primaryGradient)" stroke-width="3" opacity="0.7">
+    <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite"/>
+  </line>
+  
+  <!-- 处理器到上分支 -->
+  <line x1="118" y1="85" x2="134" y2="78" stroke="url(#secondaryGradient)" stroke-width="2.5" opacity="0.7">
+    <animate attributeName="opacity" values="0.4;1;0.4" dur="2.5s" begin="0.5s" repeatCount="indefinite"/>
+  </line>
+  
+  <!-- 处理器到下分支 -->
+  <line x1="118" y1="115" x2="134" y2="122" stroke="url(#secondaryGradient)" stroke-width="2.5" opacity="0.7">
+    <animate attributeName="opacity" values="0.4;1;0.4" dur="2.5s" begin="0.8s" repeatCount="indefinite"/>
+  </line>
+  
+  <!-- 分支汇聚到输出 -->
+  <line x1="166" y1="78" x2="158" y2="90" stroke="url(#accentGradient)" stroke-width="2.5" opacity="0.7">
+    <animate attributeName="opacity" values="0.4;1;0.4" dur="3s" begin="1.5s" repeatCount="indefinite"/>
+  </line>
+  <line x1="166" y1="122" x2="158" y2="110" stroke="url(#accentGradient)" stroke-width="2.5" opacity="0.7">
+    <animate attributeName="opacity" values="0.4;1;0.4" dur="3s" begin="1.8s" repeatCount="indefinite"/>
+  </line>
+
+  <!-- 流动粒子效果 -->
+  <g>
+    <!-- 主流动线 -->
+    <circle r="2" fill="url(#primaryGradient)" opacity="0.8">
+      <animateMotion dur="4s" repeatCount="indefinite" path="M48,100 L75,100 L118,85 L134,78 L158,90 L170,100"/>
+      <animate attributeName="opacity" values="0;1;1;0" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    
+    <!-- 下分支流动 -->
+    <circle r="2" fill="url(#secondaryGradient)" opacity="0.6">
+      <animateMotion dur="4s" begin="1s" repeatCount="indefinite" path="M75,100 L118,115 L134,122 L158,110 L170,100"/>
+      <animate attributeName="opacity" values="0;0.8;0.8;0" dur="4s" begin="1s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- 顶部自动化指示器 -->
+  <g transform="translate(100, 35)">
+    <circle cx="0" cy="0" r="12" fill="none" stroke="url(#primaryGradient)" stroke-width="2" opacity="0.6">
+      <animate attributeName="stroke-dasharray" values="0,75;37,38;75,0" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="0" cy="0" r="6" fill="url(#primaryGradient)" opacity="0.8">
+      <animate attributeName="r" values="4;8;4" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <!-- 自动化图标 -->
+    <path d="M-3,-1 L3,1 M-3,1 L3,-1" stroke="white" stroke-width="1.5" stroke-linecap="round">
+      <animateTransform attributeName="transform" type="rotate" values="0;360" dur="4s" repeatCount="indefinite"/>
+    </path>
+  </g>
+
+  <!-- 底部状态指示 -->
+  <g transform="translate(100, 165)" opacity="0.7">
+    <rect x="-20" y="0" width="40" height="6" rx="3" fill="url(#accentGradient)" opacity="0.3"/>
+    <rect x="-20" y="0" width="30" height="6" rx="3" fill="url(#primaryGradient)" opacity="0.7">
+      <animate attributeName="width" values="10;35;40;30" dur="5s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+
+  <!-- 环绕装饰 -->
+  <circle cx="100" cy="100" r="70" fill="none" stroke="url(#accentGradient)" stroke-width="1" opacity="0.3">
+    <animate attributeName="stroke-dasharray" values="0,440;110,330;220,220;440,0" dur="8s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.2;0.5;0.2" dur="8s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- 装饰性点 -->
+  <g opacity="0.6">
+    <circle cx="150" cy="50" r="2" fill="url(#secondaryGradient)">
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="3s" begin="1s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="50" cy="150" r="2" fill="url(#accentGradient)">
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="3s" begin="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="150" cy="150" r="2" fill="url(#primaryGradient)">
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="3s" begin="1.5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+</svg> 

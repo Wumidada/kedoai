@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clear Orders</title>
+</head>
+<body>
+    <h1>清除订单数据</h1>
+    <p>点击按钮清除本地存储中的订单数据</p>
+    <button onclick="clearOrders()">清除订单</button>
+    <p id="message"></p>
+
+    <script>
+        function clearOrders() {
+            localStorage.removeItem('kedo_orders');
+            document.getElementById('message').textContent = '订单数据已清除！';
+            console.log('Orders cleared');
+        }
+    </script>
+</body>
+</html>
