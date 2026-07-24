@@ -26,3 +26,4 @@ dist-ssr
 # Local caches and Office temporary files
 npm-cache/
 ~$*.pptx
+/kedoclaw一体机白-removebg-preview.png
