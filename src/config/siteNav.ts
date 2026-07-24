@@ -1,6 +1,6 @@
 import type { NavMenuIconName } from '@/components/nav/navMenuIconTypes'
 
-export type SiteNavActiveKey = 'home' | 'community' | 'overview' | 'kedobot-demo'
+export type SiteNavActiveKey = 'home' | 'community' | 'overview' | 'aipc' | 'kedobot-demo'
 
 export interface SiteNavPrimaryLink {
   key: string
@@ -21,6 +21,7 @@ export interface SiteNavDropdownItem {
 export const SITE_NAV_PRIMARY_LINKS: SiteNavPrimaryLink[] = [
   { key: 'home', name: '首页', path: '/' },
   { key: 'overview', name: '总览', path: '/#/overview', external: true },
+  { key: 'aipc', name: 'AIPC', path: '/aipc' },
 ]
 
 /** 产品中心 — KedoBot（一体机）与 KedoClaw（边缘终端）为独立产品线 */

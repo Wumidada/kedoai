@@ -139,6 +139,13 @@ const routes = [
     component: () => import('@/view/overview/Index.vue'),
     meta: { title: '总览', requiresAuth: false }
   },
+  // AIPC 产品介绍页面
+  {
+    path: '/aipc',
+    name: 'aipc',
+    component: () => import('@/view/aipc/Index.vue'),
+    meta: { title: 'AIPC', requiresAuth: false }
+  },
   // 场景页面
   {
     path: '/scenarios',

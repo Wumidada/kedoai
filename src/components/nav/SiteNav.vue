@@ -330,11 +330,7 @@ const openDropdownKey = ref<string | null>(null)
 const userAvatar = computed(() => userStore.getUserAvatar)
 const isLoggedIn = computed(() => !!userStore.getUserId)
 
-const isPrimaryActive = (key: string) => {
-  if (key === 'home') return props.activeKey === 'home'
-  if (key === 'overview') return props.activeKey === 'overview'
-  return false
-}
+const isPrimaryActive = (key: string) => props.activeKey === key
 
 const goHome = () => {
   router.push('/')
@@ -347,17 +343,11 @@ const goCommunity = () => {
 
 const handlePrimaryClick = (item: SiteNavPrimaryLink) => {
   isMobileMenuOpen.value = false
-  if (item.key === 'home') {
-    router.push('/')
+  if (item.external) {
+    window.open(item.path, '_blank', 'noopener,noreferrer')
     return
   }
-  if (item.key === 'overview') {
-    if (item.external) {
-      window.open('/#/overview', '_blank')
-    } else {
-      router.push('/overview')
-    }
-  }
+  router.push(item.path)
 }
 
 const toggleDropdown = (key: string) => {

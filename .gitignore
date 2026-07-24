@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local caches and Office temporary files
+npm-cache/
+~$*.pptx
