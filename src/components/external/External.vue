@@ -118,7 +118,7 @@ const iframeSrc = computed(() => {
       }
     })
   }
-  console.log('iframeSrc', url.toString())
+  // URL 包含登录凭据，不输出到控制台。
   
   return url.toString()
 })
