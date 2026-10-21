@@ -62,6 +62,28 @@
           </div>
         </div>
 
+        <!-- 当前 Token 可调用的模型 -->
+        <section class="available-models-card" aria-labelledby="board-available-models-title">
+          <div class="models-heading">
+            <span id="board-available-models-title" class="models-title">
+              {{ $t('dashboard.exchange.availableModelsTitle') }}
+            </span>
+            <span class="models-subtitle">
+              {{ $t('dashboard.exchange.availableModelsSubtitle') }}
+            </span>
+          </div>
+          <div class="model-list" role="list">
+            <span
+              v-for="model in availableModels"
+              :key="model"
+              class="model-tag"
+              role="listitem"
+            >
+              {{ model }}
+            </span>
+          </div>
+        </section>
+
         <!-- 密钥管理区域 -->
         <div class="key-card">
           <div class="key-header">
@@ -120,8 +142,13 @@
           <a-input
             v-model:value="exchangeCode"
             :placeholder="$t('dashboard.exchange.placeholder')"
+            :maxlength="maxCodeLength"
+            :aria-label="$t('dashboard.exchange.placeholder')"
+            autocomplete="off"
+            spellcheck="false"
             size="large"
             class="exchange-input"
+            @pressEnter="handleExchange"
           />
           <div class="input-decoration">
             <GiftOutlined />
@@ -133,6 +160,7 @@
             type="primary"
             size="large"
             :loading="exchangeLoading"
+            :disabled="!canExchange"
             @click="handleExchange"
           >
             {{ $t('dashboard.exchange.exchangeNow') }}
@@ -225,6 +253,7 @@
 import { ref, reactive, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/store/user";
+import { useMembershipCode } from "@/hooks/useMembershipCode";
 import { useI18n } from "vue-i18n";
 import { message } from "ant-design-vue";
 import CustomModal from "@/components/modal/Index.vue";
@@ -242,8 +271,7 @@ import {
   OnionGPT_GetGTPProjects,
   OnionGPT_CreateGPTProject,
   OnionGPT_ModifyGPTProject,
-  OnionGPT_RemoveGPTProject,
-  User_ActivateMembershipCode
+  OnionGPT_RemoveGPTProject
 } from "@/api";
 
 const router = useRouter();
@@ -267,9 +295,19 @@ const keyLoading = ref(false);
 const deleteLoading = ref<string>("");
 const keyModalLoading = ref(false);
 
-// Exchange相关
-const exchangeCode = ref<string>("");
-const exchangeLoading = ref(false);
+// 激活码兑换逻辑由 composable 统一维护，避免不同入口行为不一致。
+const {
+  exchangeCode,
+  exchangeLoading,
+  availableModels,
+  canExchange,
+  maxCodeLength,
+  handleExchange,
+} = useMembershipCode({
+  onSuccess: ({ remainingQnty }) => {
+    tokenRemaining.value = String(remainingQnty);
+  },
+});
 
 // 密钥相关
 const keyModalVisible = ref(false);
@@ -484,42 +522,6 @@ const copyToClipboard = async (title: string, content: string) => {
   }
 };
 
-// Exchange相关方法
-const handleExchange = async () => {
-  if (!exchangeCode.value.trim()) {
-    message.error("请输入内容");
-    return;
-  }
-
-  exchangeLoading.value = true;
-  try {
-    const userId = userStore.getUserId;
-    if (!userId) return;
-
-    const [err, response] = await awaitWrapper(
-      User_ActivateMembershipCode({
-        f_Code: exchangeCode.value,
-        f_UserId: String(userId)
-      })
-    );
-    
-    if (err) {
-      console.error("兑换失败:", err);
-      message.error("兑换失败，请检查兑换码是否正确");
-      return;
-    }
-
-    exchangeCode.value = "";
-    message.success("兑换成功!");
-    userStore.setMemberStatus(true);
-  } catch (error) {
-    console.error("兑换失败:", error);
-    message.error("兑换失败，请检查兑换码是否正确");
-  } finally {
-    exchangeLoading.value = false;
-  }
-};
-
 // 快速开始
 const handleQuickStart = () => {
   // 根据用户状态跳转到合适的页面
@@ -535,8 +537,9 @@ const handleQuickStart = () => {
 
 // 生命周期
 onMounted(() => {
-  // getUserAccountInfo(); // 暂时注释，Finance模块已删除
-  // getKeyList(); // 暂时注释，OnionGPT模块已删除
+  getUserAccountInfo();
+  // OnionGPT 密钥模块未启用时，不主动请求密钥列表。
+  // getKeyList();
 });
 </script>
 
@@ -787,6 +790,52 @@ onMounted(() => {
   height: 42px;
 }
 
+.available-models-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 22px 26px;
+  background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+  border: 1px solid rgba(30, 156, 255, 0.16);
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(30, 156, 255, 0.08);
+}
+
+.models-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.models-title {
+  color: #1f2937;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.models-subtitle {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.model-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.model-tag {
+  padding: 8px 14px;
+  color: #087fc2;
+  font-size: 14px;
+  font-weight: 600;
+  background: rgba(30, 156, 255, 0.1);
+  border: 1px solid rgba(30, 156, 255, 0.22);
+  border-radius: 999px;
+}
+
 .key-card {
   background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
   border-radius: 16px;
@@ -966,6 +1015,16 @@ onMounted(() => {
 
   .card-section {
     flex-direction: column;
+  }
+
+  .available-models-card {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .model-list {
+    justify-content: flex-start;
   }
 
   .key-card {

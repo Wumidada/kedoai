@@ -536,11 +536,16 @@
       "projectPurpose": "プロジェクト用途："
     },
     "exchange": {
-      "title": "特典交換",
-      "tip1": "特典コード/アクティベーションコードを入力して、対応する特典と交換；",
+      "title": "Token 交換",
+      "tip1": "Token アクティベーションコードを入力すると、Token がすぐに反映されます；",
       "tip2": "このコードは請求書や返金をサポートしません。安全に保管し、紛失、漏洩、アカウント間違えなどは補償されません",
-      "placeholder": "ここにアクティベーションコード/交換コード/特典コードを入力",
-      "exchangeNow": "今すぐ交換"
+      "placeholder": "Token アクティベーションコードを入力",
+      "exchangeNow": "今すぐ交換",
+      "codeRequired": "Token アクティベーションコードを入力してください",
+      "loginRequired": "コードを交換する前にログインしてください",
+      "success": "{tokens} Token の交換に成功しました！",
+      "availableModelsTitle": "利用可能なモデル",
+      "availableModelsSubtitle": "交換した Token は以下のモデルで利用できます"
     }
   },
   "products": {

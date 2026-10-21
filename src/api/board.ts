@@ -37,6 +37,12 @@ interface ActivateMembershipCodeParams {
   f_UserId: string;
 }
 
+export interface ActivateTokenCodeResult {
+  redeemedTokens: number;
+  remainingQnty: number;
+  availableModels: string[];
+}
+
 
 // 查询用户Token使用量
 export const QueryUserTokenUsage = (params: QueryUserTokenUsageParams) => {

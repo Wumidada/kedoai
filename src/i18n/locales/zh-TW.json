@@ -536,11 +536,16 @@
       "projectPurpose": "專案用途："
     },
     "exchange": {
-      "title": "權益兌換",
-      "tip1": "輸入福利碼/啟動碼，使用即可兌換對應的權益；",
+      "title": "Token 兌換",
+      "tip1": "輸入 Token 啟動碼，兌換後 Token 將立即入帳；",
       "tip2": "此碼不支援開發票、退款，請妥善保管，遺失、洩露、綁錯帳號等不補",
-      "placeholder": "在此輸入您的啟動碼/兌換碼/福利碼",
-      "exchangeNow": "立即兌換"
+      "placeholder": "在此輸入您的 Token 啟動碼",
+      "exchangeNow": "立即兌換",
+      "codeRequired": "請輸入 Token 啟動碼",
+      "loginRequired": "請先登入後再兌換",
+      "success": "成功兌換 {tokens} Token！",
+      "availableModelsTitle": "可用模型",
+      "availableModelsSubtitle": "兌換後的 Token 可用於以下模型"
     }
   },
   "products": {

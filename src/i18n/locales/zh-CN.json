@@ -537,11 +537,16 @@
       "projectPurpose": "项目用途："
     },
     "exchange": {
-      "title": "权益兑换",
-      "tip1": "输入福利码/激活码，使用即可兑换对应的权益；",
+      "title": "Token 兑换",
+      "tip1": "输入 Token 激活码，兑换后 Token 将立即到账；",
       "tip2": "此码不支持开发票、退款，请妥善保管，遗失、泄露、绑错账号等不补",
-      "placeholder": "在此输入您的激活码/兑换码/福利码",
-      "exchangeNow": "立即兑换"
+      "placeholder": "在此输入您的 Token 激活码",
+      "exchangeNow": "立即兑换",
+      "codeRequired": "请输入 Token 激活码",
+      "loginRequired": "请先登录后再兑换",
+      "success": "成功兑换 {tokens} Token！",
+      "availableModelsTitle": "可用模型",
+      "availableModelsSubtitle": "兑换后的 Token 可用于以下模型"
     }
   },
   "products": {

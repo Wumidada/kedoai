@@ -536,11 +536,16 @@
       "projectPurpose": "Project Purpose:"
     },
     "exchange": {
-      "title": "Benefit Exchange",
-      "tip1": "Enter benefit code/activation code to exchange corresponding benefits;",
+      "title": "Token Redemption",
+      "tip1": "Enter a Token activation code and the Tokens will be credited immediately;",
       "tip2": "This code does not support invoice or refund. Please keep it safe. No compensation for loss, leakage, or wrong account binding.",
-      "placeholder": "Enter your activation code/exchange code/benefit code here",
-      "exchangeNow": "Exchange Now"
+      "placeholder": "Enter your Token activation code",
+      "exchangeNow": "Redeem Now",
+      "codeRequired": "Please enter a Token activation code",
+      "loginRequired": "Please sign in before redeeming a code",
+      "success": "Successfully redeemed {tokens} Tokens!",
+      "availableModelsTitle": "Available Models",
+      "availableModelsSubtitle": "Redeemed Tokens can be used with these models"
     }
   },
   "products": {
