@@ -662,17 +662,6 @@ onMounted(() => {
   position: relative;
   overflow: hidden;
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(45deg, transparent, rgba(30, 156, 255, 0.05), transparent);
-    animation: shine 6s linear infinite;
-  }
-
   .banner-content {
     display: flex;
     align-items: center;
@@ -754,14 +743,6 @@ onMounted(() => {
     }
   }
 
-  @keyframes shine {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
 }
 
 .main-content {

@@ -1,26 +1,33 @@
 <template>
   <div class="agent-container">
-    <!-- 头部导航 -->
-    <div class="agent-header">
+    <header class="agent-header">
       <div class="agent-header-content">
-        <div class="agent-back" @click="goBack">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        <button type="button" class="agent-back" @click="goBack">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
           返回
-        </div>
-        <h1 class="agent-title">{{ agent?.title || '智能体详情' }}</h1>
+        </button>
+        <div class="header-location"><span>场景中心</span><span aria-hidden="true">/</span><h1>{{ agent?.title || '智能体详情' }}</h1></div>
+        <span class="header-label">专属角色 · 专业协作</span>
       </div>
-    </div>
+    </header>
 
-    <!-- 智能体信息 -->
-    <div class="agent-info" v-if="agent">
-      <div class="agent-card">
-        <div class="agent-card-header" :style="{ background: agent.gradient }">
-          <div class="agent-icon">{{ agent.icon }}</div>
-          <h2 class="agent-card-title">{{ agent.title }}</h2>
-          <p class="agent-card-description">{{ agent.description }}</p>
-        </div>
+    <template v-if="agent">
+      <nav class="mobile-tabs" aria-label="页面内容切换">
+        <button type="button" :class="{ active: activePanel === 'info' }" :aria-pressed="activePanel === 'info'" aria-controls="agent-info" @click="selectPanel('info')">角色介绍</button>
+        <button type="button" :class="{ active: activePanel === 'chat' }" :aria-pressed="activePanel === 'chat'" aria-controls="agent-chat" @click="selectPanel('chat')">体验对话</button>
+      </nav>
+      <main class="agent-workspace">
+        <section id="agent-info" class="agent-info" :class="{ 'mobile-inactive': activePanel !== 'info' }" aria-label="角色介绍">
+          <div class="agent-card">
+            <div class="agent-card-header">
+              <div class="role-eyebrow">SCENARIO AGENT <span>场景智能体</span></div>
+              <div class="agent-icon" :style="{ background: agent.gradient }" aria-hidden="true">{{ agent.icon }}</div>
+              <h2 class="agent-card-title">{{ agent.title }}</h2>
+              <p class="agent-card-description">{{ agent.description }}</p>
+              <div class="role-tags"><span>角色设定</span><span>专业领域</span><span>协作指南</span></div>
+            </div>
         <div class="agent-card-body">
           <!-- 身份与记忆 -->
           <div class="agent-section">
@@ -117,37 +124,51 @@
           </div>
         </div>
       </div>
-    </div>
+        </section>
 
-    <!-- 对话区域 -->
-    <div class="agent-chat">
-      <div class="chat-header">
-        <h3>与 {{ agent?.title }} 对话</h3>
-      </div>
-      <div class="chat-messages" ref="chatMessages">
-        <div :class="['message', message.type === 'user' ? 'user-message' : 'bot-message']" v-for="(message, index) in messages" :key="index">
-          <div v-if="message.type === 'bot'" class="message-avatar">{{ agent?.icon }}</div>
-          <div v-else class="message-avatar">👤</div>
-          <div class="message-content">{{ message.content }}</div>
-        </div>
-      </div>
-      <div class="chat-input">
-        <input type="text" v-model="inputMessage" placeholder="输入消息..." @keyup.enter="sendMessage">
-        <button @click="sendMessage">发送</button>
-      </div>
-    </div>
+        <section id="agent-chat" class="agent-chat" :class="{ 'mobile-inactive': activePanel !== 'chat' }" aria-labelledby="chat-title">
+          <div class="chat-header">
+            <div class="chat-heading"><span class="chat-role-icon" :style="{ background: agent.gradient }" aria-hidden="true">{{ agent.icon }}</span><div><h2 id="chat-title">与 {{ agent.title }} 对话</h2><span class="demo-status"><i aria-hidden="true"></i>界面演示 · 未接入 AI</span></div></div>
+            <button type="button" class="reset-chat" @click="resetConversation" :disabled="messages.length <= 1" aria-label="重新开始对话" title="清空本页演示消息，重新开始">重新开始</button>
+          </div>
+          <p class="demo-notice">这里可以体验对话界面，当前回复为预设演示，不是 AI 生成的答案。</p>
+          <div class="chat-messages" ref="chatMessages" role="log" aria-label="对话消息" aria-live="polite" aria-relevant="additions" tabindex="0">
+            <div v-for="(message, index) in messages" :key="index" :class="['message', message.type === 'user' ? 'user-message' : 'bot-message']">
+              <div class="message-avatar" aria-hidden="true">{{ message.type === 'user' ? '我' : agent.icon }}</div>
+              <div class="message-body"><span class="message-author">{{ message.type === 'user' ? '你' : agent.title }}</span><div class="message-content">{{ message.content }}</div></div>
+            </div>
+          </div>
+          <div class="chat-compose">
+            <div v-if="messages.length === 1" class="chat-starters" aria-label="试试这样开始">
+              <button v-for="question in starterQuestions" :key="question" type="button" @click="useStarter(question)">{{ question }} <span aria-hidden="true">↗</span></button>
+            </div>
+            <form class="chat-input" @submit.prevent="sendMessage">
+              <label class="sr-only" for="agent-message">发送给 {{ agent.title }} 的消息</label>
+              <textarea id="agent-message" ref="messageInput" v-model="inputMessage" rows="3" maxlength="4000" placeholder="描述你的目标、背景或遇到的问题…" @keydown="onInputKeydown" @compositionstart="isComposing = true" @compositionend="isComposing = false"></textarea>
+              <div class="composer-toolbar"><span>{{ inputMessage.length }} / 4000</span><button type="submit" :disabled="!inputMessage.trim()">发送 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m21 3-7 18-4-7-7-4 18-7ZM10 14 21 3" /></svg></button></div>
+            </form>
+            <p class="composer-hint"><span>Enter 发送 · Shift + Enter 换行</span><span>演示消息仅在本页保留</span></p>
+          </div>
+        </section>
+      </main>
+    </template>
+    <main v-else class="agent-empty"><span aria-hidden="true">⌕</span><h2>暂未找到这个角色</h2><p>该场景可能已调整，请返回场景中心选择其他角色。</p><button type="button" @click="router.push('/scenarios')">返回场景中心</button></main>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, nextTick, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
 const router = useRouter()
 const chatMessages = ref(null)
+const messageInput = ref(null)
 const inputMessage = ref('')
 const messages = ref([])
+const activePanel = ref('info')
+const isComposing = ref(false)
+const starterQuestions = ['你可以帮我做些什么？', '如何开始一个这方面的任务？']
 
 // 智能体数据 - 从agency-agents-main文件夹中提取
 const agentsData = {
@@ -1556,385 +1577,184 @@ const agentsData = {
   }
 }
 
-// 根据路由参数获取智能体数据
-const agent = computed(() => {
-  const agentId = route.params.id
-  return agentsData[agentId] || null
-})
+const agent = computed(() => agentsData[route.params.id] || null)
+const agentDetails = agent
 
-const agentDetails = computed(() => {
-  const agentId = route.params.id
-  return agentsData[agentId] || null
-})
+const scrollToBottom = async () => {
+  await nextTick()
+  if (chatMessages.value) chatMessages.value.scrollTop = chatMessages.value.scrollHeight
+}
 
-// 发送消息
+const resetConversation = () => {
+  inputMessage.value = ''
+  isComposing.value = false
+  messages.value = agent.value ? [{
+    type: 'bot',
+    content: `你好，我是${agent.value.title}。${agent.value.description}\n\n你可以先说说想完成的任务，或在左侧了解我的角色设定。`
+  }] : []
+  scrollToBottom()
+}
+
+// This page is a local UI demo. No model request or credential is sent here.
 const sendMessage = () => {
-  if (inputMessage.value.trim()) {
-    // 添加用户消息
-    messages.value.push({ content: inputMessage.value, type: 'user' })
-    
-    // 模拟智能体回复
-    setTimeout(() => {
-      let reply = generateAgentReply()
-      messages.value.push({ content: reply, type: 'bot' })
-      scrollToBottom()
-    }, 1000)
-    
-    inputMessage.value = ''
-    scrollToBottom()
-  }
+  const text = inputMessage.value.trim()
+  if (!text || !agent.value || isComposing.value) return
+  messages.value.push({ content: text, type: 'user' })
+  const missions = (agent.value.missions || []).slice(0, 3).map(item => `• ${item}`).join('\n')
+  messages.value.push({
+    type: 'bot',
+    content: `【演示回复】消息已在本页展示，尚未发送给 AI。\n\n${agent.value.title}的角色设定涵盖以下方向：\n${missions}\n\n接入 AI 服务后，这里将根据你的具体问题与当前角色设定生成回答。`
+  })
+  inputMessage.value = ''
+  scrollToBottom()
 }
 
-// 生成智能体回复
-const generateAgentReply = () => {
-  if (!agent.value) {
-    return '我是智能体，可以帮助你解决问题。'
-  }
-  
-  const { title, description, identity, missions, rules, communicationStyle } = agent.value
-  
-  // 获取用户最后一条消息
-  const userMessage = messages.value.length > 0 ? messages.value[messages.value.length - 1].content : ''
-  
-  // 如果没有用户消息（首次对话），显示欢迎信息
-  if (!userMessage) {
-    let reply = `你好！我是${title}。${description}`
-    
-    // 添加一些基于身份的个性化内容
-    if (identity) {
-      reply += `\n\n作为${identity.role}，我${identity.personality}。`
-    }
-    
-    // 添加一些核心使命
-    if (missions && missions.length > 0) {
-      reply += '\n\n我的核心使命包括：'
-      missions.slice(0, 3).forEach(mission => {
-        reply += `\n- ${mission}`
-      })
-      if (missions.length > 3) {
-        reply += `\n- 以及更多...`
-      }
-    }
-    
-    // 添加一些关键规则
-    if (rules && rules.length > 0) {
-      reply += '\n\n我遵循的关键规则包括：'
-      rules.slice(0, 2).forEach(rule => {
-        reply += `\n- ${rule}`
-      })
-    }
-    
-    reply += '\n\n请问有什么我可以帮助你的吗？'
-    
-    return reply
-  }
-  
-  // 根据用户输入生成针对性回复
-  let reply = ''
-  
-  // 分析用户输入，根据智能体的专业领域生成回复
-  if (missions && missions.length > 0) {
-    reply = `作为${title}，我可以帮助你：`
-    
-    // 基于用户输入关键词匹配相关使命
-    const userInput = userMessage.toLowerCase()
-    const relevantMissions = missions.filter(mission => {
-      const missionLower = mission.toLowerCase()
-      return userInput.includes('帮助') || userInput.includes('如何') || userInput.includes('做') || 
-             userInput.includes('设计') || userInput.includes('开发') || userInput.includes('分析') ||
-             missionLower.includes(userInput.split(' ')[0])
-    })
-    
-    if (relevantMissions.length > 0) {
-      relevantMissions.slice(0, 3).forEach(mission => {
-        reply += `\n- ${mission}`
-      })
-    } else {
-      missions.slice(0, 3).forEach(mission => {
-        reply += `\n- ${mission}`
-      })
-    }
-    
-    reply += '\n\n请告诉我你具体需要帮助的内容，我会为你提供专业的支持。'
-  } else {
-    reply = `作为${title}，我可以为你提供专业的${description}服务。请告诉我你具体需要帮助的内容，我会根据我的专业知识为你提供详细的解答。`
-  }
-  
-  return reply
+const onInputKeydown = (event) => {
+  if (event.key !== 'Enter' || event.shiftKey || event.isComposing || isComposing.value || event.keyCode === 229) return
+  event.preventDefault()
+  sendMessage()
 }
 
-// 滚动到底部
-const scrollToBottom = () => {
-  setTimeout(() => {
-    if (chatMessages.value) {
-      chatMessages.value.scrollTop = chatMessages.value.scrollHeight
-    }
-  }, 100)
+const useStarter = (question) => {
+  inputMessage.value = question
+  messageInput.value?.focus()
 }
 
-// 回退
+const selectPanel = async (panel) => {
+  activePanel.value = panel
+  await nextTick()
+  window.scrollTo({ top: 0, behavior: 'instant' })
+  if (panel === 'chat') scrollToBottom()
+}
+
 const goBack = () => {
-  router.back()
+  if (window.history.state?.back) router.back()
+  else router.push('/scenarios')
 }
 
-// 初始化
-onMounted(() => {
-  // 添加欢迎消息
-  if (agent.value) {
-    messages.value.push({ 
-      content: `你好！我是${agent.value.title}。${agent.value.description}有什么我可以帮助你的吗？`, 
-      type: 'bot' 
-    })
-    scrollToBottom()
-  }
-})
+// Vue reuses this component for different role IDs: never mix role conversations.
+watch(() => route.params.id, () => {
+  activePanel.value = 'info'
+  resetConversation()
+  window.scrollTo({ top: 0, behavior: 'instant' })
+}, { immediate: true })
 </script>
 
 <style scoped>
-.agent-container {
-  width: 100%;
-  min-height: 100vh;
-  background-color: #f8fafc;
-  display: flex;
-  flex-direction: column;
+.agent-container { --accent: #189cf5; --ink: #1e293b; --muted: #64748b; width: 100%; min-height: 100vh; background: radial-gradient(ellipse at 90% 0%, #e9f5ff 0%, transparent 45%), #f6f9fc; color: var(--ink); font-family: inherit; }
+.agent-container *, .agent-container *::before, .agent-container *::after { box-sizing: border-box; }
+button, textarea { font: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; }
+button:focus-visible, textarea:focus-visible, .chat-messages:focus-visible { outline: 3px solid #85caff; outline-offset: 3px; }
+.agent-header { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,.96); border-bottom: 1px solid #e6edf4; }
+.agent-header-content { max-width: 1488px; min-height: 72px; margin: 0 auto; padding: 12px 36px; display: flex; align-items: center; gap: 28px; }
+.agent-back { display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0; padding: 7px 0; color: #526680; border: 0; background: none; font-size: 14px; }
+.agent-back:hover { color: var(--accent); }
+.header-location { display: flex; align-items: center; gap: 14px; min-width: 0; font-size: 13px; color: #8291a5; }
+.header-location h1 { margin: 0; color: var(--ink); font-size: 15px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.header-label { margin-left: auto; flex-shrink: 0; color: #8291a5; font-size: 12px; letter-spacing: 1px; }
+.mobile-tabs { display: none; }
+.agent-workspace { width: 100%; max-width: 1488px; padding: 28px 36px 48px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(380px, 1fr); gap: 24px; align-items: start; }
+.agent-info { min-width: 0; }
+.agent-card { overflow: hidden; background: #fff; border: 1px solid #e5edf5; border-radius: 20px; box-shadow: 0 8px 32px #284d7310; }
+.agent-card-header { position: relative; padding: 30px 32px 28px; background: linear-gradient(120deg, #f0f8ff, #fff 85%); border-bottom: 1px solid #eaf0f7; }
+.role-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; color: #6685a1; font-size: 10px; letter-spacing: 2px; font-weight: 600; }
+.role-eyebrow span { border-left: 1px solid #cad8e5; padding-left: 10px; font-size: 11px; letter-spacing: 1px; font-weight: 400; }
+.agent-icon { width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; font-size: 29px; border-radius: 16px; box-shadow: inset 0 0 0 1px #ffffff50, 0 6px 14px #233b5c15; margin-bottom: 18px; }
+.agent-card-title { margin: 0 0 10px; font-size: clamp(22px, 2.1vw, 30px); font-weight: 650; line-height: 1.4; color: #1c3049; }
+.agent-card-description { margin: 0; font-size: 14px; line-height: 1.9; color: #64748b; overflow-wrap: anywhere; }
+.role-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.role-tags span { padding: 4px 10px; font-size: 11px; border: 1px solid #dfecf9; background: #fff; border-radius: 6px; color: #6486a6; }
+.agent-card-body { padding: 28px 32px; }
+.agent-section { margin-bottom: 28px; }
+.agent-section:last-child { margin-bottom: 0; }
+.agent-section-title { display: flex; align-items: center; gap: 9px; font-size: 16px; color: #263d56; font-weight: 600; margin: 0 0 14px; }
+.section-icon { width: 30px; height: 30px; border-radius: 8px; background: #f1f7fc; display: flex; justify-content: center; align-items: center; font-size: 15px; }
+.agent-info-list, .agent-mission-list, .agent-rules-list { list-style: none; padding: 0; margin: 0; }
+.agent-info-list li, .agent-mission-list li, .agent-rules-list li { font-size: 13px; line-height: 1.9; color: #5b6b7f; padding: 9px 0; border-bottom: 1px solid #f0f4f8; overflow-wrap: anywhere; }
+.agent-info-list li strong { color: #344a63; font-weight: 600; margin-right: 5px; }
+.agent-info-list li:last-child, .agent-mission-list li:last-child, .agent-rules-list li:last-child { border-bottom: 0; }
+.agent-mission-list li, .agent-rules-list li { position: relative; padding-left: 16px; }
+.agent-mission-list li::before, .agent-rules-list li::before { content: ''; width: 5px; height: 5px; background: #86c7f7; border-radius: 50%; position: absolute; left: 0; top: 19px; }
+.agent-chat { min-width: 0; position: sticky; top: 100px; display: flex; flex-direction: column; height: calc(100vh - 128px); height: max(360px, calc(100dvh - 128px)); background: #fff; border: 1px solid #e0eaf4; border-radius: 20px; box-shadow: 0 12px 36px #284d7312; overflow: hidden; }
+.chat-header { flex-shrink: 0; padding: 20px 22px; display: flex; align-items: center; justify-content: space-between; gap: 10px; border-bottom: 1px solid #edf2f7; }
+.chat-heading { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.chat-role-icon { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 40px; height: 40px; font-size: 23px; border-radius: 12px; }
+.chat-header h2 { font-size: 14px; color: #233b55; font-weight: 600; line-height: 1.6; margin: 0 0 4px; overflow-wrap: anywhere; }
+.demo-status { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #8594a6; }
+.demo-status i { width: 5px; height: 5px; background: #a4b4c7; border-radius: 50%; }
+.reset-chat { font-size: 11px; color: #6586a5; background: #f6f9fc; border: 1px solid #e7eef5; padding: 6px 8px; border-radius: 6px; flex-shrink: 0; }
+.reset-chat:hover:not(:disabled) { color: var(--accent); border-color: #b8defb; }
+.reset-chat:disabled { opacity: .45; }
+.demo-notice { flex-shrink: 0; background: #f5f9fe; color: #71859c; font-size: 11px; line-height: 1.7; padding: 10px 22px; margin: 0; }
+.chat-messages { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #d5e3f0 transparent; padding: 24px 22px 12px; }
+.message { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 22px; }
+.message-avatar { flex-shrink: 0; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 10px; background: #f2f6fb; font-size: 17px; }
+.message-body { min-width: 0; max-width: calc(100% - 40px); }
+.message-author { display: block; color: #8594a6; font-size: 10px; margin: 0 0 7px; }
+.message-content { width: fit-content; padding: 12px 14px; background: #f3f7fc; border: 1px solid #ebf1f8; border-radius: 0 12px 12px 12px; font-size: 13px; line-height: 1.9; color: #42566e; white-space: pre-wrap; overflow-wrap: anywhere; }
+.user-message { flex-direction: row-reverse; }
+.user-message .message-author { text-align: right; }
+.user-message .message-avatar { background: #eaf5ff; color: #278ddb; font-size: 12px; }
+.user-message .message-content { margin-left: auto; background: #eaf5ff; border-color: #dceeff; border-radius: 12px 0 12px 12px; color: #2d6087; }
+.chat-compose { flex-shrink: 0; padding: 12px 20px 16px; border-top: 1px solid #f0f4f8; background: #fff; }
+.chat-starters { display: flex; flex-wrap: wrap; gap: 7px; margin: 0 0 12px; }
+.chat-starters button { padding: 6px 9px; border-radius: 7px; border: 1px solid #e3edf7; color: #6583a0; background: #fbfdff; font-size: 11px; text-align: left; }
+.chat-starters button:hover { border-color: #acd9fb; color: #168eda; }
+.chat-starters button span { margin-left: 6px; color: #8cb4d4; }
+.chat-input { padding: 12px; background: #fbfdff; border: 1px solid #dce8f3; border-radius: 12px; transition: border-color .2s, box-shadow .2s; }
+.chat-input:focus-within { border-color: #83c9fb; box-shadow: 0 0 0 3px #189cf50a; }
+.chat-input textarea { display: block; width: 100%; border: 0; outline: 0; resize: vertical; min-height: 58px; max-height: 140px; padding: 0; background: transparent; color: #334c66; font-size: 13px; line-height: 1.7; }
+.chat-input textarea::placeholder { color: #9aaabd; }
+.composer-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 8px; }
+.composer-toolbar > span { font-size: 10px; color: #9baabd; }
+.composer-toolbar button { display: flex; align-items: center; gap: 7px; color: #fff; padding: 7px 14px; font-size: 12px; background: linear-gradient(120deg, #2299f6, #13afee); border: 0; border-radius: 8px; box-shadow: 0 3px 8px #179dee25; }
+.composer-toolbar button:disabled { background: #e4edf5; box-shadow: none; color: #9bafc2; }
+.composer-toolbar button:hover:not(:disabled) { filter: brightness(.96); }
+.composer-hint { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; margin: 10px 0 0; color: #96a6b9; font-size: 10px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.agent-empty { margin: 80px auto; padding: 24px; max-width: 480px; text-align: center; }
+.agent-empty > span { font-size: 48px; color: #7cb8e5; }
+.agent-empty h2 { font-size: 22px; }
+.agent-empty p { font-size: 14px; color: #64748b; line-height: 1.8; }
+.agent-empty button { padding: 10px 18px; background: #189cf5; color: #fff; border: 0; border-radius: 8px; }
+@media (max-width: 1100px) {
+  .agent-header-content { padding-inline: 24px; }
+  .agent-workspace { padding-inline: 24px; gap: 18px; grid-template-columns: minmax(0, 1fr) minmax(360px, 1fr); }
+  .agent-card-header, .agent-card-body { padding: 24px; }
+  .chat-header { padding: 18px 16px; }
+  .chat-messages { padding-inline: 16px; }
+  .chat-compose { padding-inline: 14px; }
 }
-
-.agent-header {
-  background-color: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 1rem 0;
-  position: sticky;
-  top: 0;
-  z-index: 100;
+@media (max-width: 900px) {
+  .agent-header-content { min-height: 64px; padding: 12px 18px; gap: 18px; }
+  .header-label, .header-location > span { display: none; }
+  .header-location h1 { font-size: 14px; }
+  .mobile-tabs { display: flex; gap: 8px; padding: 10px 18px; background: #f6f9fc; border-bottom: 1px solid #e6edf4; position: sticky; top: 64px; z-index: 9; }
+  .mobile-tabs button { flex: 1; padding: 9px; color: #71849b; border: 1px solid transparent; background: transparent; border-radius: 9px; font-size: 13px; }
+  .mobile-tabs button.active { background: #fff; color: #148edf; border-color: #dceaf6; box-shadow: 0 2px 6px #334e6810; font-weight: 600; }
+  .agent-workspace { display: block; padding: 16px 18px 24px; }
+  .mobile-inactive { display: none; }
+  .agent-card, .agent-chat { border-radius: 16px; }
+  .agent-chat { position: static; height: calc(100vh - 162px); height: max(360px, calc(100dvh - 162px)); }
+  .agent-card-title { font-size: 24px; }
+  .role-eyebrow { margin-bottom: 20px; }
+  .chat-input textarea { font-size: 16px; min-height: 56px; max-height: 100px; }
 }
-
-.agent-header-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+@media (max-width: 480px) {
+  .agent-header-content { padding-inline: 14px; }
+  .agent-workspace { padding: 12px 12px 16px; }
+  .agent-card-header, .agent-card-body { padding: 22px; }
+  .agent-chat { height: calc(100vh - 150px); height: max(360px, calc(100dvh - 150px)); }
+  .chat-header { padding: 15px 14px; }
+  .chat-role-icon { width: 32px; height: 32px; font-size: 20px; border-radius: 9px; }
+  .chat-heading { gap: 8px; }
+  .chat-header h2 { font-size: 12px; }
+  .demo-notice { padding: 9px 14px; }
+  .chat-messages { padding: 20px 14px 8px; }
+  .chat-compose { padding: 10px 12px 12px; }
+  .composer-hint { font-size: 9px; }
 }
-
-.agent-back {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-  color: #3b82f6;
-  font-weight: 500;
-}
-
-.agent-back:hover {
-  text-decoration: underline;
-}
-
-.agent-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #1e293b;
-}
-
-.agent-info {
-  flex: 1;
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
-}
-
-.agent-card {
-  background-color: white;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-  overflow: hidden;
-  margin-bottom: 2rem;
-}
-
-.agent-card-header {
-  padding: 3rem;
-  color: white;
-  text-align: center;
-}
-
-.agent-icon {
-  font-size: 4rem;
-  margin-bottom: 1rem;
-}
-
-.agent-card-title {
-  font-size: 2rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-}
-
-.agent-card-description {
-  font-size: 1.125rem;
-  opacity: 0.9;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.agent-card-body {
-  padding: 2rem;
-}
-
-.agent-section {
-  margin-bottom: 2rem;
-}
-
-.agent-section-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #1e293b;
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.section-icon {
-  font-size: 1.5rem;
-}
-
-.agent-info-list,
-.agent-mission-list,
-.agent-rules-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.agent-info-list li,
-.agent-mission-list li,
-.agent-rules-list li {
-  padding: 0.5rem 0;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.agent-info-list li:last-child,
-.agent-mission-list li:last-child,
-.agent-rules-list li:last-child {
-  border-bottom: none;
-}
-
-.agent-chat {
-  background-color: white;
-  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
-  padding: 1rem;
-  position: sticky;
-  bottom: 0;
-}
-
-.chat-header {
-  padding: 1rem 0;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.chat-header h3 {
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #1e293b;
-  margin: 0;
-}
-
-.chat-messages {
-  height: 300px;
-  overflow-y: auto;
-  padding: 1rem 0;
-}
-
-.message {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.message-avatar {
-  font-size: 1.5rem;
-  min-width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f1f5f9;
-  border-radius: 50%;
-}
-
-.message-content {
-  flex: 1;
-  background-color: #f1f5f9;
-  padding: 1rem;
-  border-radius: 12px;
-  color: #1e293b;
-}
-
-.bot-message .message-content {
-  background-color: #e0f2fe;
-}
-
-.user-message {
-  flex-direction: row-reverse;
-}
-
-.user-message .message-content {
-  background-color: #dbeafe;
-  color: #1e293b;
-}
-
-.user-message .message-avatar {
-  background-color: #3b82f6;
-  color: white;
-}
-
-.chat-input {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.chat-input input {
-  flex: 1;
-  padding: 0.75rem 1rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  font-size: 1rem;
-}
-
-.chat-input button {
-  padding: 0.75rem 1.5rem;
-  background-color: #3b82f6;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.chat-input button:hover {
-  background-color: #2563eb;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-}
-
-@media (max-width: 768px) {
-  .agent-header-content {
-    padding: 0 1rem;
-  }
-
-  .agent-info {
-    padding: 1rem;
-  }
-
-  .agent-card-header {
-    padding: 2rem;
-  }
-
-  .agent-card-body {
-    padding: 1.5rem;
-  }
-}
+@media (prefers-reduced-motion: reduce) { .chat-input { transition: none; } }
 </style>

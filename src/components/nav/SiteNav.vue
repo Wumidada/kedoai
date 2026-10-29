@@ -156,8 +156,8 @@
           OPC社区
         </a>
 
-        <span class="site-nav-item coming-soon-nav">帮助中心 <ComingSoonBadge /></span>
-        <span class="site-nav-item coming-soon-nav">关于我们 <ComingSoonBadge /></span>
+        <span class="site-nav-item coming-soon-nav">帮助中心</span>
+        <span class="site-nav-item coming-soon-nav">关于我们</span>
 
         <a
           href="#/board/orders"
@@ -184,10 +184,6 @@
                   <UserOutlined />
                   个人设置
                   <ComingSoonBadge />
-                </a-menu-item>
-                <a-menu-item key="dashboard">
-                  <DashboardOutlined />
-                  控制台
                 </a-menu-item>
                 <a-menu-divider />
                 <a-menu-item key="logout">
@@ -269,8 +265,8 @@
         <a href="/#/community" class="site-nav-mobile-link" @click.prevent="goCommunity">
           OPC社区
         </a>
-        <span class="site-nav-mobile-link coming-soon-item">帮助中心 <ComingSoonBadge /></span>
-        <span class="site-nav-mobile-link coming-soon-item">关于我们 <ComingSoonBadge /></span>
+        <span class="site-nav-mobile-link coming-soon-item">帮助中心</span>
+        <span class="site-nav-mobile-link coming-soon-item">关于我们</span>
 
         <div class="site-nav-mobile-section">
           <div class="site-nav-mobile-section-title">我的</div>
@@ -296,7 +292,7 @@
 import { ref, computed, h, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { Modal, message } from 'ant-design-vue'
-import { UserOutlined, LogoutOutlined, DashboardOutlined } from '@ant-design/icons-vue'
+import { UserOutlined, LogoutOutlined } from '@ant-design/icons-vue'
 import { useUserStore } from '@/store/user'
 import { useStorage } from '@/hooks/useStorage'
 import NavMenuIcon from '@/components/nav/NavMenuIcon.vue'
@@ -373,8 +369,6 @@ const handleScroll = () => {
 const handleUserMenuClick = ({ key }: { key: string }) => {
   if (key === 'logout') {
     handleLogout()
-  } else if (key === 'dashboard') {
-    window.open('/#/board/overview', '_blank')
   }
 }
 
